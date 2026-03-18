@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -11,8 +13,8 @@ namespace Stomp\Broker\RabbitMq;
 
 use Stomp\Exception\StompException;
 use Stomp\Protocol\Protocol;
-use Stomp\Transport\Frame;
 use Stomp\Protocol\Version;
+use Stomp\Transport\Frame;
 
 /**
  * RabbitMq Stomp dialect.
@@ -26,7 +28,6 @@ use Stomp\Protocol\Version;
  */
 class RabbitMq extends Protocol
 {
-
     /**
      * Prefetch Size for subscriptions.
      *
@@ -77,7 +78,6 @@ class RabbitMq extends Protocol
         return $frame;
     }
 
-
     /**
      * Prefetch Count for subscriptions
      *
@@ -97,7 +97,6 @@ class RabbitMq extends Protocol
     {
         $this->prefetchCount = $prefetchCount;
     }
-
 
     /**
      * Get message not acknowledge frame.

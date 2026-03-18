@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -40,7 +42,6 @@ class StatefulTest extends StatefulTestBase
 
         $producer->send($queue, new Message('message-a', ['persistent' => 'true']));
         $producer->getClient()->disconnect(true);
-
 
         $frameA = $receiver->read();
         $receiver->nack($frameA, true);

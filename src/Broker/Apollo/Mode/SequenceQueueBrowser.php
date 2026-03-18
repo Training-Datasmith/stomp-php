@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -24,11 +26,11 @@ class SequenceQueueBrowser extends QueueBrowser
     /**
      * Browser start at head at current queue
      */
-    const START_HEAD = 0;
+    public const START_HEAD = 0;
     /**
      * Browser start at for new messages in queue
      */
-    const START_NEW = -1;
+    public const START_NEW = -1;
 
     /**
      * @var int

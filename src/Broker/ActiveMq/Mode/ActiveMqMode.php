@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -26,7 +28,6 @@ abstract class ActiveMqMode
      */
     protected $client;
 
-
     /**
      * @var Options
      */
@@ -53,7 +54,6 @@ abstract class ActiveMqMode
         }
         return $protocol;
     }
-
 
     /**
      * @return Options

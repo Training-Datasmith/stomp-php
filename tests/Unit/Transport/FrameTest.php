@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -27,7 +29,7 @@ class FrameTest extends TestCase
             'SEND',
             [
                 'destination' => '/queue/a',
-                'receipt' => 'message-12345'
+                'receipt' => 'message-12345',
             ],
             'hello queue a^@'
         );
@@ -88,7 +90,6 @@ hello queue a^@' . "\x00",
         $this->assertEquals($expected, $result);
     }
 
-
     public function testFrameAddsContentLengthHeaderIfAsked()
     {
         $frame = new Frame('SEND', ['my-header' => 'my-value'], 'MyContent');
@@ -97,7 +98,6 @@ hello queue a^@' . "\x00",
         $expected = "SEND\nmy-header:my-value\ncontent-length:9\n\nMyContent\x00";
         $this->assertEquals($expected, $result);
     }
-
 
     public function testFrameAddsContentLengthHeaderIfBodyContainsNullByte()
     {

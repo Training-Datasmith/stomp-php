@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -26,7 +28,7 @@ class StreamSignalTest extends TestCase
                 => ['signal_handling'],
             // https://github.com/stomp-php/stomp-php/issues/117
             'Signal Handler will not wait for read timeout to pass, when wait-callable returns false.'
-                => ['signal_handling_wait_callable']
+                => ['signal_handling_wait_callable'],
         ];
     }
 
@@ -40,9 +42,9 @@ class StreamSignalTest extends TestCase
             $this->markTestSkipped('The pcntl extension is required to run this test case.');
         }
         $descriptorspec = [
-            0 => ["pipe", "r"],
-            1 => ["pipe", "w"],
-            2 => ["pipe", "w"]
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
         ];
 
         $process = proc_open(
@@ -66,7 +68,6 @@ class StreamSignalTest extends TestCase
 
         // give process some time to trigger a signal handler
         usleep(100000);
-
 
         $output = stream_get_contents($pipes[1]);
         $this->assertEmpty(stream_get_contents($pipes[2]));

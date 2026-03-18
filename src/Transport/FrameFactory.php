@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -35,7 +37,6 @@ class FrameFactory
                 }
             };
     }
-
 
     /**
      * Creates a frame instance out of the given frame details.

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -41,7 +43,6 @@ class SequenceQueueBrowserTest extends TestCase
     private static $queue;
     private static $expires;
 
-
     public function testBrowserFromStart()
     {
         $browser = new SequenceQueueBrowser(
@@ -62,7 +63,6 @@ class SequenceQueueBrowserTest extends TestCase
         $browser->unsubscribe();
     }
 
-
     public function testBrowserFromOffset()
     {
         $browser = new SequenceQueueBrowser(
@@ -82,7 +82,6 @@ class SequenceQueueBrowserTest extends TestCase
         $this->assertTrue($browser->hasReachedEnd());
         $browser->unsubscribe();
     }
-
 
     public function testBrowserFromNew()
     {

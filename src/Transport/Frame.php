@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -195,7 +197,7 @@ class Frame implements ArrayAccess
         if ($this->legacyMode) {
             return str_replace(["\n"], ['\n'], $value);
         }
-        return str_replace(["\\", "\r", "\n", ':'], ["\\\\", '\r', '\n', '\c'], $value);
+        return str_replace(['\\', "\r", "\n", ':'], ['\\\\', '\r', '\n', '\c'], $value);
     }
 
     /**
@@ -226,7 +228,6 @@ class Frame implements ArrayAccess
             $this->headers[$offset] = $value;
         }
     }
-
 
     /**
      * @inheritdoc

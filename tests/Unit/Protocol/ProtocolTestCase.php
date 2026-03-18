@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -10,10 +12,10 @@
 namespace Stomp\Tests\Unit\Protocol;
 
 use PHPUnit\Framework\TestCase;
+use Stomp\Exception\StompException;
 use Stomp\Protocol\Protocol;
 use Stomp\Protocol\Version;
 use Stomp\Transport\Frame;
-use Stomp\Exception\StompException;
 
 /**
  * Protocol test cases.
@@ -23,7 +25,6 @@ use Stomp\Exception\StompException;
  */
 abstract class ProtocolTestCase extends TestCase
 {
-
     /**
      * @param string $version
      * @return Protocol
@@ -163,7 +164,6 @@ abstract class ProtocolTestCase extends TestCase
         $this->assertIsAbortFrame($actual);
         $this->assertEquals('my-transaction', $actual['transaction']);
     }
-
 
     public function testDisconnect()
     {

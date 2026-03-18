@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -29,7 +31,7 @@ class Connection
     /**
      * Default ActiveMq port
      */
-    const DEFAULT_PORT = 61613;
+    public const DEFAULT_PORT = 61613;
 
     /**
      * Host schemes.
@@ -75,7 +77,7 @@ class Connection
      * @var array
      */
     private $params = [
-        'randomize' => false // connect to one host from list in random order
+        'randomize' => false, // connect to one host from list in random order
     ];
 
     /**
@@ -137,7 +139,7 @@ class Connection
     /**
      * Alive Signal
      */
-    const ALIVE = "\n";
+    public const ALIVE = "\n";
 
     /**
      * @var callable|null
@@ -350,7 +352,7 @@ class Connection
                 $lastException = $connectionException;
             }
         }
-        throw new ConnectionException("Could not connect to a broker", [], $lastException);
+        throw new ConnectionException('Could not connect to a broker', [], $lastException);
     }
 
     /**
@@ -404,7 +406,6 @@ class Connection
             $context
         );
 
-
         if (!is_resource($socket)) {
             throw new ConnectionException(sprintf('Failed to connect. (%s: %s)', $errNo, $errStr), $host);
         }
@@ -415,7 +416,6 @@ class Connection
         $this->host = $host['host'];
         return $socket;
     }
-
 
     /**
      * Connection established.
@@ -436,7 +436,6 @@ class Connection
         $this->connection = null;
         $this->activeHost = [];
     }
-
 
     /**
      * Write frame to server.

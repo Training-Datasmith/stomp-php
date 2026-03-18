@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -67,7 +69,6 @@ class DurableSubscriptionTest extends ActiveMqFunctionalTestCase
         $durableAwake->nack($durableAwake->read());
         $durableAwake->ack($durableAwake->read());
         $durableAwake->deactivate();
-
 
         $dlq = $this->getCurrentDLQ();
         $this->assertCount(1, $dlq);

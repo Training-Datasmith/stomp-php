@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -10,9 +12,9 @@ namespace Stomp\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Stomp\Client;
-use Stomp\SimpleStomp;
 use Stomp\Protocol\Protocol;
 use Stomp\Protocol\Version;
+use Stomp\SimpleStomp;
 use Stomp\Transport\Frame;
 use Stomp\Transport\Message;
 
@@ -83,46 +85,46 @@ class SimpleStompTest extends TestCase
                 [
                     $protocol->getSubscribeFrame('/test/queue', 55, 'auto', 'S=5')
                     ->addHeaders(['myHeader' => 'myHeaderValue']),
-                    null
+                    null,
                 ],
-                true
+                true,
             ],
             'unsubscribe' => [
                 'unsubscribe',
                 ['/test/queue', 44, ['myHeader' => 'myHeaderValue']],
                 [$protocol->getUnsubscribeFrame('/test/queue', 44)->addHeaders(['myHeader' => 'myHeaderValue']), null],
-                true
+                true,
             ],
             'begin' => [
                 'begin',
                 [11211],
                 [$protocol->getBeginFrame(11211), false],
-                true
+                true,
             ],
             'commit' => [
                 'commit',
                 [2211],
                 [$protocol->getCommitFrame(2211), false],
-                true
+                true,
             ],
             'abort' => [
                 'abort',
                 [1122],
                 [$protocol->getAbortFrame(1122), false],
-                true
+                true,
             ],
             'ack' => [
                 'ack',
                 [new Frame('MESSAGE', ['id' => 121])],
                 [$protocol->getAckFrame(new Frame('MESSAGE', ['id' => 121])), false],
-                null
+                null,
             ],
             'nack' => [
                 'nack',
                 [new Frame('MESSAGE', ['ack' => 212])],
                 [$protocol->getNackFrame(new Frame('MESSAGE', ['ack' => 212])), false],
-                null
-            ]
+                null,
+            ],
         ];
     }
 }

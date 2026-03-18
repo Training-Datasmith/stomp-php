@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -52,7 +54,6 @@ class ProtocolTest extends ProtocolTestCase
         $this->assertEquals('my-user', $actual['login']);
         $this->assertEquals('my-pass', $actual['passcode']);
     }
-
 
     public function testGetters()
     {

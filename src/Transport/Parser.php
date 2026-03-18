@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -22,11 +24,10 @@ use Stomp\Network\Observer\ConnectionObserver;
  */
 class Parser
 {
-
     /**
      * Frame end
      */
-    const FRAME_END = "\x00";
+    public const FRAME_END = "\x00";
 
     /**
      * Frame that has been parsed last.
@@ -66,22 +67,22 @@ class Parser
     /**
      * Expecting header data mode
      */
-    const MODE_HEADER = 'HEADER';
+    public const MODE_HEADER = 'HEADER';
 
     /**
      * Expecting body end marker mode
      */
-    const MODE_BODY = 'BODY';
+    public const MODE_BODY = 'BODY';
 
     /**
      * Header end marker CR_LF
      */
-    const HEADER_STOP_CR_LF = "\r\n\r\n";
+    public const HEADER_STOP_CR_LF = "\r\n\r\n";
 
     /**
      * Header end marker LF
      */
-    const HEADER_STOP_LF = "\n\n";
+    public const HEADER_STOP_LF = "\n\n";
 
     /**
      * Parser offset within buffer
@@ -140,7 +141,6 @@ class Parser
         return $this;
     }
 
-
     /**
      * Returns the factory that will be used to create frame instances.
      *
@@ -197,7 +197,6 @@ class Parser
         }
         return null;
     }
-
 
     /**
      * Parse current buffer for frames.
@@ -302,7 +301,6 @@ class Parser
         return $bodySize !== null;
     }
 
-
     /**
      * Adds a frame from current known command, headers. Uses current offset and given body size.
      *
@@ -321,7 +319,6 @@ class Parser
         $this->headers = [];
         $this->mode = self::MODE_HEADER;
     }
-
 
     /**
      * Extracts command and headers from given header source.
@@ -356,7 +353,7 @@ class Parser
         if ($this->legacyMode) {
             return str_replace(['\n'], ["\n"], $value);
         }
-        return str_replace(['\r', '\n', '\c', "\\\\"], ["\r", "\n", ':', "\\"], $value);
+        return str_replace(['\r', '\n', '\c', '\\\\'], ["\r", "\n", ':', '\\'], $value);
     }
 
     /**

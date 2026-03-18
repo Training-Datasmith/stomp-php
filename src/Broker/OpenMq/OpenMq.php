@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -10,8 +12,8 @@
 namespace Stomp\Broker\OpenMq;
 
 use Stomp\Protocol\Protocol;
-use Stomp\Transport\Frame;
 use Stomp\Protocol\Version;
+use Stomp\Transport\Frame;
 
 /**
  * OpenMq Stomp dialect.

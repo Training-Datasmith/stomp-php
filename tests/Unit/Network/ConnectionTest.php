@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -50,7 +52,7 @@ class ConnectionTest extends TestCase
             'non-failover URI' => ['tcp://host1:61614', false],
             'no randomize param' => ['failover://(tcp://host1:61614,ssl://host2:61612)', false],
             'randomize=true param' => ['failover://(tcp://host1:61614,ssl://host2:61612)?randomize=true', true],
-            'randomize=false param' => ['failover://(tcp://host1:61614,ssl://host2:61612)?randomize=false', false]
+            'randomize=false param' => ['failover://(tcp://host1:61614,ssl://host2:61612)?randomize=false', false],
         ];
     }
 
@@ -135,7 +137,7 @@ class ConnectionTest extends TestCase
             ->getMock();
 
         $expectedHosts = [
-            'host1', 'host2', 'host3'
+            'host1', 'host2', 'host3',
         ];
 
         $test = $this;
@@ -219,7 +221,6 @@ class ConnectionTest extends TestCase
         $this->expectException(ConnectionException::class);
 
         stream_wrapper_register('stompFakeStream', FakeStream::class);
-
 
         $mock = $this->getMockBuilder(Connection::class)
             ->onlyMethods(['getConnection'])

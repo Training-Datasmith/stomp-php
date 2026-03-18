@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -35,9 +37,9 @@ class FrameFactoryTest extends TestCase
 
     public function testFrameFactoryWillCreateDefaultFrames()
     {
-        $frame = $this->instance->createFrame('COMMAND', ['header1' => true, "header2" => 2], 'BODY', true);
+        $frame = $this->instance->createFrame('COMMAND', ['header1' => true, 'header2' => 2], 'BODY', true);
         $this->assertEquals('COMMAND', $frame->getCommand());
-        $this->assertEquals(['header1' => true, "header2" => 2], $frame->getHeaders());
+        $this->assertEquals(['header1' => true, 'header2' => 2], $frame->getHeaders());
         $this->assertEquals('BODY', $frame->getBody());
         $this->assertTrue($frame->isLegacyMode());
         $this->assertInstanceOf(Frame::class, $frame);
@@ -90,7 +92,6 @@ class FrameFactoryTest extends TestCase
         $this->assertInstanceOf(Frame::class, $frame);
         $this->assertEquals([2, 1], $resolver, 'Custom resolver must have been called in reverse order.');
     }
-
 
     public function testCustomResolverResultWillBeUsedIfPossible()
     {

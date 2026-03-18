@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -21,12 +23,12 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * Frame from client that request a connection.
      */
-    const FRAME_CLIENT_CONNECT = 'CONNECT';
+    public const FRAME_CLIENT_CONNECT = 'CONNECT';
 
     /**
      * Frame from server when a connection is established.
      */
-    const FRAME_SERVER_CONNECTED = 'CONNECTED';
+    public const FRAME_SERVER_CONNECTED = 'CONNECTED';
     /**
      * The beat interval that the client wants to use.
      *

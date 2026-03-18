@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -98,7 +100,6 @@ abstract class StatefulTestBase extends TestCase
         }
 
         $this->assertEmpty($messages, 'Not all messages have been received!');
-
 
         foreach ($stomp->getSubscriptions() as $subscription) {
             $stomp->unsubscribe($subscription->getSubscriptionId());

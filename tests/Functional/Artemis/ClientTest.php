@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -58,7 +60,6 @@ class ClientTest extends TestCase
         parent::tearDown();
     }
 
-
     public function testClientDetectedActiveMq()
     {
         if (! $this->Stomp->isConnected()) {
@@ -114,7 +115,6 @@ class ClientTest extends TestCase
             $messages[$x] = 'sent';
         }
 
-
         $this->simpleStomp->subscribe($this->queue . '/ack', 'mysubid', 'client');
         for ($y = 0; $y < 100; $y += 10) {
             for ($x = $y; $x < $y + 10; ++$x) {
@@ -160,9 +160,9 @@ class ClientTest extends TestCase
         if (! $this->Stomp->isConnected()) {
             $this->Stomp->connect();
         }
-        $this->simpleStomp->begin("tx1");
-        $this->assertTrue($this->Stomp->send($this->queue . '/abort', 'testSend', ["transaction" => "tx1"]));
-        $this->simpleStomp->abort("tx1");
+        $this->simpleStomp->begin('tx1');
+        $this->assertTrue($this->Stomp->send($this->queue . '/abort', 'testSend', ['transaction' => 'tx1']));
+        $this->simpleStomp->abort('tx1');
 
         $this->simpleStomp->subscribe($this->queue . '/abort', 'mysubid');
         $frame = $this->Stomp->readFrame();
@@ -268,7 +268,7 @@ class ClientTest extends TestCase
         if (! $this->Stomp->isConnected()) {
             $this->Stomp->connect();
         }
-        $body = ["city"=>"Belgrade", "name"=>"Dejan"];
+        $body = ['city' => 'Belgrade', 'name' => 'Dejan'];
         $header = [];
         $header['transformation'] = 'jms-map-json';
         $mapMessage = new Map($body, $header);
@@ -369,7 +369,6 @@ class ClientTest extends TestCase
          * @var $amq ActiveMq
          */
         $consumer2->sendFrame($amq->getSubscribeFrame($this->topic . '/durable', 'test', 'client', null, true));
-
 
         $frame = $consumer2->readFrame();
         $this->assertEquals($frame->body, 'test message');

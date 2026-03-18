@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -73,7 +75,6 @@ class Options implements ArrayAccess
         return $this->options;
     }
 
-
     public function activateRetroactive(): self
     {
         $this['activemq.retroactive'] = 'true';
@@ -97,13 +98,11 @@ class Options implements ArrayAccess
         return $this;
     }
 
-
     public function setPrefetchSize($size): self
     {
         $this['activemq.prefetchSize'] = max($size, 1);
         return $this;
     }
-
 
     public function activateNoLocal(): self
     {

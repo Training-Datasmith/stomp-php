@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -21,12 +23,10 @@ use Stomp\Util\IdGenerator;
  */
 trait TransactionsTrait
 {
-
     /**
      * @return Protocol
      */
     abstract public function getProtocol();
-
 
     /**
      * @return Client

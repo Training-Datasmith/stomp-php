@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -24,7 +26,6 @@ use Stomp\Transport\Parser;
  */
 class ParserTest extends TestCase
 {
-
     /**
      * @var Parser
      */
@@ -36,7 +37,6 @@ class ParserTest extends TestCase
         $this->parser = new Parser();
     }
 
-
     public function testEndOfLineWithCarriageReturn()
     {
         $frame = "COMMAND\r\nheader1:value1\r\nheader2:value2\r\n\r\nBody\x00";
@@ -46,7 +46,6 @@ class ParserTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
-
 
     public function testEndOfLineWithoutCarriageReturn()
     {
@@ -58,12 +57,11 @@ class ParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-
     public function testLengthHeaderSetContentContainsNullByteAtEnd()
     {
         $frame = "COMMAND\ncontent-length:5\n\nBody" . "\x00" . "\x00";
         $this->parser->addData($frame);
-        $expected = new Frame('COMMAND', ['content-length' => 5], "Body" . "\x00");
+        $expected = new Frame('COMMAND', ['content-length' => 5], 'Body' . "\x00");
         $actual = $this->parser->nextFrame();
 
         $this->assertEquals($expected, $actual);
@@ -73,7 +71,7 @@ class ParserTest extends TestCase
     {
         $frame = "COMMAND\nX-Proof:Hello\\c\\r\\n  \\\\World!\n\nBody\x00";
         $this->parser->addData($frame);
-        $expected = new Frame('COMMAND', ['X-Proof' => 'Hello:' . "\r\n  " . '\\World!'], "Body");
+        $expected = new Frame('COMMAND', ['X-Proof' => 'Hello:' . "\r\n  " . '\\World!'], 'Body');
         $actual = $this->parser->nextFrame();
 
         $this->assertEquals($expected, $actual);
@@ -83,7 +81,6 @@ class ParserTest extends TestCase
     {
         $body = json_encode(['var' => 'value']);
         $msg = "CMD\nheader1:value1\ntransformation:jms-map-json\n\n" . $body . "\x00";
-
 
         $this->parser->addData($msg);
         $result = $this->parser->nextFrame();
@@ -110,7 +107,7 @@ class ParserTest extends TestCase
         $frame = "COMMAND\nX-Proof:Hello\\c\\r\\n  \\\\World!\n\nBody\x00";
         $this->parser->legacyMode(true);
         $this->parser->addData($frame);
-        $expected = new Frame('COMMAND', ['X-Proof' => "Hello\\c\\r\n  \\\\World!"], "Body");
+        $expected = new Frame('COMMAND', ['X-Proof' => "Hello\\c\\r\n  \\\\World!"], 'Body');
         $expected->legacyMode(true);
         $actual = $this->parser->nextFrame();
 
@@ -133,10 +130,8 @@ class ParserTest extends TestCase
             }
         }
 
-
         $expectedFrameA = new Frame('COMMAND', ['header1' => 'values:[1,2]', 'header2' => 'value2'], 'Body');
         $expectedFrameB = new Frame('COMMAND2', ['header3' => 'value2'], 'Body ');
-
 
         $this->assertEquals($expectedFrameA, $detectedFrames[0]);
         $this->assertEquals($expectedFrameB, $detectedFrames[1]);
@@ -159,10 +154,8 @@ class ParserTest extends TestCase
             }
         }
 
-
         $expectedFrameA = new Frame('COMMAND', ['header1' => 'values:[1,2]', 'header2' => 'value2'], 'Body');
         $expectedFrameB = new Frame('COMMAND2', ['header3' => 'value2'], 'Body ');
-
 
         $this->assertEquals($expectedFrameA, $detectedFrames[0]);
         $this->assertEquals($expectedFrameB, $detectedFrames[1]);
@@ -181,7 +174,6 @@ class ParserTest extends TestCase
         $this->assertEquals($body, $result->body);
         $this->assertEquals('value1', $result['header1']);
     }
-
 
     public function testParserOnFrameWithIncorrectHeaderValue()
     {
@@ -248,7 +240,6 @@ class ParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-
     /**
      * @see https://github.com/stomp-php/stomp-php/issues/93
      */
@@ -272,7 +263,6 @@ class ParserTest extends TestCase
         $message = $this->parser->nextFrame();
         $this->assertEquals($body, $message->getBody());
     }
-
 
     public function testParserTriggersObserversHeartBeatAfterFrame()
     {
@@ -337,7 +327,7 @@ class ParserTest extends TestCase
         $result = $this->parser->nextFrame();
 
         $this->assertInstanceOf(Frame::class, $result);
-        $this->assertEquals("var", $result->body);
+        $this->assertEquals('var', $result->body);
         $this->assertEquals("valu\re1", $result['header1']);
     }
 }

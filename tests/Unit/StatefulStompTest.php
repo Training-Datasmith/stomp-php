@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -77,7 +79,6 @@ class StatefulStompTest extends TestCase
         }
     }
 
-
     protected function getStatefulStompWithState($state, array $init)
     {
         $client = $this->getMockBuilder(Client::class)
@@ -130,7 +131,7 @@ class StatefulStompTest extends TestCase
                     'unsubscribe' => ProducerState::class,
                 ],
                 // methods not to test
-                ['subscribe']
+                ['subscribe'],
             ],
             ConsumerTransactionState::class => [
                 // state to test
@@ -144,7 +145,7 @@ class StatefulStompTest extends TestCase
                     'unsubscribe' => ProducerTransactionState::class,
                 ],
                 // methods not to test
-                ['subscribe']
+                ['subscribe'],
             ],
             ProducerState::class => [
                 // state to test
@@ -157,7 +158,7 @@ class StatefulStompTest extends TestCase
                     'subscribe' => ConsumerState::class,
                 ],
                 // methods not to test
-                []
+                [],
             ],
             ProducerTransactionState::class => [
                 // state to test
@@ -171,7 +172,7 @@ class StatefulStompTest extends TestCase
                     'abort' => ProducerState::class,
                 ],
                 // methods not to test
-                []
+                [],
             ],
         ];
     }

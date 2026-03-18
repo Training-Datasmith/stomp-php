@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -34,13 +36,12 @@ class ConnectionException extends StompException
         $this->connectionInfo = $connection;
 
         $host = ($previous ? $previous->getHostname() : null) ?: $this->getHostname();
-        
+
         if ($host) {
             $info = sprintf('%s (Host: %s)', $info, $host);
         }
         parent::__construct($info, 0, $previous);
     }
-
 
     /**
      * Active used connection.
@@ -51,7 +52,6 @@ class ConnectionException extends StompException
     {
         return $this->connectionInfo;
     }
-
 
     protected function getHostname()
     {

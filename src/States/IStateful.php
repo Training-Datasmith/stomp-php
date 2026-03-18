@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -82,7 +84,6 @@ interface IStateful
      * @return void
      */
     public function unsubscribe($subscriptionId = null);
-
 
     /**
      * Read a frame

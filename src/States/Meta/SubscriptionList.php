@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -22,7 +24,6 @@ use Stomp\Transport\Frame;
  */
 class SubscriptionList implements IteratorAggregate, ArrayAccess, Countable
 {
-
     /**
      * @var Subscription[]
      */

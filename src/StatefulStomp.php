@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -26,7 +28,6 @@ use Stomp\Transport\Message;
  */
 class StatefulStomp extends StateSetter implements IStateful
 {
-
     /**
      * active state
      *
@@ -135,7 +136,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         return $this->state->getSubscriptions();
     }
-
 
     /**
      * Read a frame

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -99,15 +101,15 @@ class ServerAliveObserverTest extends TestCase
         return [
             'Connection State Changes' => [
                 'onPotentialConnectionStateActivity',
-                'checkDelayed'
+                'checkDelayed',
             ],
             'Server Activity' => [
                 'onServerActivity',
-                'rememberActivity'
+                'rememberActivity',
             ],
             'Client Activity' => [
-                'onClientActivity'
-            ]
+                'onClientActivity',
+            ],
         ];
     }
 }

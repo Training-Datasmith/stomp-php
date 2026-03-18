@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -37,7 +39,6 @@ class Client
      * @var boolean
      */
     private $sync = true;
-
 
     /**
      * Client id used for durable subscriptions
@@ -89,7 +90,6 @@ class Client
      * @var string
      */
     private $passcode;
-
 
     /**
      *
@@ -290,7 +290,6 @@ class Client
         return $this->connection->writeFrame($frame);
     }
 
-
     /**
      * Write frame to server and expect an matching receipt frame
      *
@@ -303,7 +302,6 @@ class Client
         $this->connection->writeFrame($stompFrame);
         return $this->waitForReceipt($receipt);
     }
-
 
     /**
      * Wait for an receipt
@@ -341,7 +339,6 @@ class Client
     {
         return microtime(true) + $this->receiptWait;
     }
-
 
     /**
      * Read response frame from server
@@ -444,7 +441,6 @@ class Client
         $this->clientId = $clientId;
         return $this;
     }
-
 
     /**
      * Set seconds to wait for a receipt.

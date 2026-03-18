@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -103,7 +105,6 @@ class ClientTest extends TestCase
 
         for ($y = 0; $y < 100; $y += 10) {
             $this->stomp->connect();
-
 
             $this->simpleStomp->subscribe($this->queue, null, 'client');
 
@@ -339,7 +340,6 @@ class ClientTest extends TestCase
         $producer->disconnect();
     }
 
-
     protected function consume()
     {
         $consumer = ClientProvider::getClient();
@@ -355,7 +355,6 @@ class ClientTest extends TestCase
             null,
             ['durable' => 'true', 'auto-delete' => 'false']
         );
-
 
         $frame = $simpleStomp->read();
         $this->assertEquals($frame->body, 'test message');

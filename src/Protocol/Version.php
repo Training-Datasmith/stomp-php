@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -10,8 +12,8 @@ namespace Stomp\Protocol;
 
 use Stomp\Broker\ActiveMq\ActiveMq;
 use Stomp\Broker\Apollo\Apollo;
-use Stomp\Broker\RabbitMq\RabbitMq;
 use Stomp\Broker\OpenMq\OpenMq;
+use Stomp\Broker\RabbitMq\RabbitMq;
 use Stomp\Exception\StompException;
 use Stomp\Exception\UnexpectedResponseException;
 use Stomp\Transport\Frame;
@@ -27,21 +29,20 @@ class Version
     /**
      * Stomp Version 1.0
      */
-    const VERSION_1_0 = '1.0';
+    public const VERSION_1_0 = '1.0';
     /**
      * Stomp Version 1.1
      */
-    const VERSION_1_1 = '1.1';
+    public const VERSION_1_1 = '1.1';
     /**
      * Stomp Version 1.2
      */
-    const VERSION_1_2 = '1.2';
+    public const VERSION_1_2 = '1.2';
 
     /**
      * @var Frame
      */
     private $frame;
-
 
     /**
      * Version constructor.

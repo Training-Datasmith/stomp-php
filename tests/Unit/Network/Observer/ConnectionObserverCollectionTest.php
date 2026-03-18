@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -62,7 +64,6 @@ class ConnectionObserverCollectionTest extends TestCase
         $this->instance->emptyRead();
         $this->instance->emptyLineReceived();
     }
-
 
     public function testRemoveObserver()
     {

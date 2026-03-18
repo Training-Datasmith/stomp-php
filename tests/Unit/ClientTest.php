@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -70,7 +72,7 @@ class ClientTest extends TestCase
     {
         $connectFrame = new Frame('CONNECTED');
         $connectFrame['session'] = '-';
-        $connectFrame['server'] ='rabbitmq';
+        $connectFrame['server'] = 'rabbitmq';
         $connectFrame['session'] = 'session';
 
         $stomp = $this->getStompWithInjectedMockedConnectionReadResult($connectFrame);
@@ -93,7 +95,6 @@ class ClientTest extends TestCase
         $this->assertEquals(Protocol::class, get_class($stomp->getProtocol()), 'Unexpected Protocol.');
         $this->assertEquals('your-session-id', $stomp->getSessionId(), 'Wrong session id.');
     }
-
 
     public function testMultipleCallsToConnectWontLeadToMultipleConnectTries()
     {
@@ -192,7 +193,6 @@ class ClientTest extends TestCase
         $this->assertGreaterThanOrEqual($resultDiff, 2.9, 'Wait diff should be greater than /equal to 2.9.');
     }
 
-
     public function testWaitForReceiptWillThrowExceptionIfConnectionReadTimeoutOccurs()
     {
         $stomp = $this->getStompWithInjectedMockedConnectionReadResult(false);
@@ -241,7 +241,6 @@ class ClientTest extends TestCase
 
         return new Client($connection);
     }
-
 
     public function testSendWillAddDestinationAndHeaderToAnyFrameAndSetSyncState()
     {
@@ -324,7 +323,6 @@ class ClientTest extends TestCase
         );
     }
 
-
     /**
      * Get a stomp mock which will catch arguments passed to lasSendFrame and SyncState
      *
@@ -352,8 +350,6 @@ class ClientTest extends TestCase
             );
         return $stomp;
     }
-
-
 
     public function testSendFrameWithSyncWillLeadToMessageWithReceiptHeader()
     {
@@ -491,7 +487,6 @@ class ClientTest extends TestCase
                 )
             );
 
-
         $connection->expects($this->once())->method('disconnect');
         $stomp = new Client($connection);
         $stomp->connect();
@@ -524,7 +519,6 @@ class ClientTest extends TestCase
             $this->addToAssertionCount(1);
         }
     }
-
 
     public function testClientWillAutoConnectOnGetProtocol()
     {

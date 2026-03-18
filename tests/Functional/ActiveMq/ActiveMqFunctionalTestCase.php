@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -21,7 +23,6 @@ use Stomp\Transport\Frame;
  */
 abstract class ActiveMqFunctionalTestCase extends TestCase
 {
-
     /**
      * ActiveMq Stomp Test Client
      *

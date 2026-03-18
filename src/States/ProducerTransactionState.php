@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -60,7 +62,7 @@ class ProducerTransactionState extends ProducerState
                 'destination' => $destination,
                 'selector' => $selector,
                 'ack' => $ack,
-                'header' => $header
+                'header' => $header,
             ]
         );
     }

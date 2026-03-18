@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -77,7 +79,6 @@ class AbstractBeatsTest extends TestCase
         $this->assertTrue($instance->isEnabled());
     }
 
-
     public function testSendFrameInDisabledStateWillProcessConnectFrame()
     {
         $instance = $this->getInstance();
@@ -91,7 +92,6 @@ class AbstractBeatsTest extends TestCase
 
         $this->assertFalse($instance->isEnabled());
     }
-
 
     public function testReceiveFrameInEnabledStateWillTriggerServerActivity()
     {

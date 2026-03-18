@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -24,7 +26,7 @@ class ConsumerPCNTLTestCase
     private $stomp;
     private $stopSignalled = false;
 
-    const MAX_RUNTIME = 4;
+    public const MAX_RUNTIME = 4;
 
     /**
      * ConsumerPCNTLTestCase constructor.
@@ -33,7 +35,6 @@ class ConsumerPCNTLTestCase
     {
         $this->stomp = new StatefulStomp(new Client(new Connection('tcp://127.0.0.1:61010')));
     }
-
 
     /**
      * Starts the long running consumer process.
@@ -58,7 +59,6 @@ class ConsumerPCNTLTestCase
                 return false;
             }
         }
-
 
         if (!$this->stopSignalled) {
             echo 'FAILED: The stop signal was not received!', PHP_EOL;
@@ -99,7 +99,6 @@ class ConsumerPCNTLTestCase
             }
         }
 
-
         if (!$this->stopSignalled) {
             echo 'FAILED: The stop signal was not received!', PHP_EOL;
             return false;
@@ -116,7 +115,6 @@ class ConsumerPCNTLTestCase
     {
         pcntl_signal(SIGUSR1, [$this, 'onSignal']);
     }
-
 
     private function onSignal()
     {

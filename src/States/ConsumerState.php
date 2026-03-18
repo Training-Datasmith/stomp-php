@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -117,7 +119,6 @@ class ConsumerState extends StateTemplate
         return $subscription->getSubscriptionId();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -129,7 +130,6 @@ class ConsumerState extends StateTemplate
             );
         }
     }
-
 
     /**
      * Closes given subscription or last opened.
@@ -178,14 +178,13 @@ class ConsumerState extends StateTemplate
         return $this->subscriptions;
     }
 
-
     /**
      * @inheritdoc
      */
     protected function getOptions(): array
     {
         return [
-            'subscriptions' => $this->subscriptions
+            'subscriptions' => $this->subscriptions,
         ];
     }
 }

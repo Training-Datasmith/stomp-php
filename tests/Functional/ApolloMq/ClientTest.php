@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Stomp package.
  *
@@ -25,13 +27,11 @@ class ClientTest extends TestCase
      */
     private $client;
 
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->client = ClientProvider::getClient();
     }
-
 
     public function testConnectOnApollo()
     {

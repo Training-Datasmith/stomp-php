@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -14,7 +16,7 @@ $signalTest = new ConsumerPCNTLTestCase();
 
 $cases = [
     'signal_handling' => 'testRegisteredAndTriggeredSignalHandlerWontLeadToConnectionException',
-    'signal_handling_wait_callable' => 'testRegisteredWaitCallableWillDirectlyReturnFromRead'
+    'signal_handling_wait_callable' => 'testRegisteredWaitCallableWillDirectlyReturnFromRead',
 ];
 
 $case = $cases[$argv[1]];

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
@@ -99,7 +101,7 @@ class ActiveMqTest extends ProtocolTestCase
 
         $resultIdBased = $instance->getAckFrame(new Frame(null, [
             'message-id' => 'id-value',
-            'subscription' => 'my-subscription'
+            'subscription' => 'my-subscription',
         ]), 'my-transaction');
 
         $this->assertIsAckFrame($resultIdBased);
@@ -138,7 +140,6 @@ class ActiveMqTest extends ProtocolTestCase
         $this->assertIsNackFrame($resultIdBased);
     }
 
-
     public function testNackVersionOne()
     {
         $instance = $this->getProtocol(Version::VERSION_1_1);
@@ -150,7 +151,7 @@ class ActiveMqTest extends ProtocolTestCase
 
         $resultIdBased = $instance->getNackFrame(new Frame(null, [
             'message-id' => 'id-value',
-            'subscription' => 'my-subscription'
+            'subscription' => 'my-subscription',
         ]), 'my-transaction');
 
         $this->assertIsNackFrame($resultIdBased);
