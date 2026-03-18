@@ -28,7 +28,6 @@ class UnexpectedResponseException extends StompException
 
     /**
      *
-     * @param Frame $frame
      * @param string $expectedInfo
      */
     public function __construct(Frame $frame, $expectedInfo)

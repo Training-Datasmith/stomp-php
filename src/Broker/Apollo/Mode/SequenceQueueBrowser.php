@@ -45,7 +45,6 @@ class SequenceQueueBrowser extends QueueBrowser
     /**
      * SequenceQueueBrowser constructor.
      *
-     * @param Client $client
      * @param string $destination
      * @param int $startAt
      * @param bool $stopOnEnd

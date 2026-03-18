@@ -26,10 +26,6 @@ class ErrorFrameException extends StompException
      */
     private $frame;
 
-    /**
-     *
-     * @param Frame $frame
-     */
     public function __construct(Frame $frame)
     {
         $this->frame = $frame;

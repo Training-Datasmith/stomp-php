@@ -52,7 +52,6 @@ class QueueBrowser
     /**
      * QueueBrowser constructor.
      *
-     * @param Client $client
      * @param string $destination
      * @param bool $stopOnEnd
      */
@@ -80,10 +79,8 @@ class QueueBrowser
 
     /**
      * Headers used in subscribe.
-     *
-     * @return array
      */
-    protected function getHeader()
+    protected function getHeader(): array
     {
         return [
             'browser' => 'true',
@@ -93,10 +90,8 @@ class QueueBrowser
 
     /**
      * Initialize subscription.
-     *
-     * @return void
      */
-    public function subscribe()
+    public function subscribe(): void
     {
         if (!$this->active) {
             $this->reachedEnd = false;
@@ -115,10 +110,8 @@ class QueueBrowser
 
     /**
      * End subscription.
-     *
-     * @return void
      */
-    public function unsubscribe()
+    public function unsubscribe(): void
     {
         if ($this->active) {
             $this->client->sendFrame(

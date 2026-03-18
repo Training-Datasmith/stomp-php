@@ -38,8 +38,6 @@ abstract class StateTemplate extends StateSetter implements IStateful
 
     /**
      * StateTemplate constructor.
-     * @param Client $client
-     * @param StatefulStomp $base
      */
     public function __construct(Client $client, StatefulStomp $base)
     {
@@ -60,7 +58,6 @@ abstract class StateTemplate extends StateSetter implements IStateful
     /**
      * Activates the current state, after it has been applied on base.
      *
-     * @param array $options
      * @return mixed
      */
     abstract protected function init(array $options = []);

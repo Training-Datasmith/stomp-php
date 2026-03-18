@@ -33,7 +33,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function commit()
+    public function commit(): void
     {
         $this->getClient()->sendFrame(
             $this->getProtocol()->getCommitFrame($this->transactionId)
@@ -44,7 +44,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function abort()
+    public function abort(): void
     {
         $this->transactionAbort();
         $this->setState(new ConsumerState($this->getClient(), $this->getBase()), parent::getOptions());
@@ -53,7 +53,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function ack(Frame $frame)
+    public function ack(Frame $frame): void
     {
         $this->getClient()->sendFrame($this->getProtocol()->getAckFrame($frame, $this->transactionId), false);
     }
@@ -61,7 +61,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function nack(Frame $frame, $requeue = null)
+    public function nack(Frame $frame, $requeue = null): void
     {
         $this->getClient()->sendFrame(
             $this->getProtocol()->getNackFrame($frame, $this->transactionId, $requeue),
@@ -72,7 +72,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function unsubscribe($subscriptionId = null)
+    public function unsubscribe($subscriptionId = null): void
     {
         if ($this->endSubscription($subscriptionId)) {
             $this->setState(

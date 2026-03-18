@@ -30,7 +30,7 @@ class IdGenerator
      */
     public static function generateId()
     {
-        while ($rand = rand(1, PHP_INT_MAX)) {
+        while ($rand = random_int(1, PHP_INT_MAX)) {
             if (!in_array($rand, self::$generatedIds, true)) {
                 self::$generatedIds[] = $rand;
                 return $rand;
@@ -45,7 +45,7 @@ class IdGenerator
      *
      * @param int $generatedId
      */
-    public static function releaseId($generatedId)
+    public static function releaseId($generatedId): void
     {
         $index = array_search($generatedId, self::$generatedIds, true);
         if ($index !== false) {

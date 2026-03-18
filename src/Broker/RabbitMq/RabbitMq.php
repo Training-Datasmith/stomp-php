@@ -93,7 +93,7 @@ class RabbitMq extends Protocol
      *
      * @param int $prefetchCount
      */
-    public function setPrefetchCount($prefetchCount)
+    public function setPrefetchCount($prefetchCount): void
     {
         $this->prefetchCount = $prefetchCount;
     }
@@ -102,7 +102,6 @@ class RabbitMq extends Protocol
     /**
      * Get message not acknowledge frame.
      *
-     * @param \Stomp\Transport\Frame $frame
      * @param string $transactionId
      * @param bool $requeue Requeue header supported on RabbitMQ >= 3.4, ignored in prior versions
      * @return \Stomp\Transport\Frame

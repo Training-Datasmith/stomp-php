@@ -199,7 +199,7 @@ class Connection
      *
      * @param callable|null $waitCallback
      */
-    public function setWaitCallback($waitCallback)
+    public function setWaitCallback($waitCallback): void
     {
         if ($waitCallback !== null) {
             /** @phpstan-ignore-next-line function.alreadyNarrowedType */
@@ -234,10 +234,9 @@ class Connection
      * Parse a broker URL
      *
      * @param string $url Broker URL
-     * @return void
      * @throws ConnectionException
      */
-    private function parseUrl($url)
+    private function parseUrl(string $url): void
     {
         $parsed = parse_url($url);
         if ($parsed === false) {
@@ -251,9 +250,8 @@ class Connection
      *
      * @param integer $seconds      seconds
      * @param integer $microseconds microseconds (1μs = 0.000001s, ex. 500ms = 500000)
-     * @return void
      */
-    public function setReadTimeout($seconds, $microseconds = 0)
+    public function setReadTimeout($seconds, $microseconds = 0): void
     {
         $this->readTimeout[0] = $seconds;
         $this->readTimeout[1] = $microseconds;
@@ -276,18 +274,15 @@ class Connection
      *
      * @param int $writeTimeout seconds
      */
-    public function setWriteTimeout($writeTimeout)
+    public function setWriteTimeout($writeTimeout): void
     {
         $this->writeTimeout = $writeTimeout;
     }
 
     /**
      * Set socket context
-     *
-     * @param array $context
-     * @return void
      */
-    public function setContext(array $context)
+    public function setContext(array $context): void
     {
         $this->context = $context;
     }
@@ -299,7 +294,7 @@ class Connection
      *
      * @param int $maxWriteBytes bytes
      */
-    public function setMaxWriteBytes($maxWriteBytes)
+    public function setMaxWriteBytes($maxWriteBytes): void
     {
         $this->maxWriteBytes = $maxWriteBytes;
     }
@@ -311,7 +306,7 @@ class Connection
      *
      * @param int $maxReadBytes bytes
      */
-    public function setMaxReadBytes($maxReadBytes)
+    public function setMaxReadBytes($maxReadBytes): void
     {
         $this->maxReadBytes = $maxReadBytes;
     }
@@ -319,10 +314,9 @@ class Connection
     /**
      * Connect to an broker.
      *
-     * @return boolean
      * @throws ConnectionException
      */
-    public function connect()
+    public function connect(): bool
     {
         if (!$this->isConnected()) {
             $this->connection = $this->getConnection();
@@ -333,7 +327,7 @@ class Connection
     /**
      * @param boolean $persistentConnection
      */
-    public function setPersistentConnection($persistentConnection)
+    public function setPersistentConnection($persistentConnection): void
     {
         $this->persistentConnection = $persistentConnection;
     }
@@ -361,10 +355,8 @@ class Connection
 
     /**
      * Get the host list.
-     *
-     * @return array
      */
-    protected function getHostList()
+    protected function getHostList(): array
     {
         $hosts = array_values($this->hosts);
         if ($this->shouldRandomizeHosts()) {
@@ -381,7 +373,7 @@ class Connection
      * @return bool
      *   Whether the broker hosts should be shuffled in random order.
      */
-    protected function shouldRandomizeHosts()
+    protected function shouldRandomizeHosts(): bool
     {
         return filter_var($this->params['randomize'], FILTER_VALIDATE_BOOLEAN);
     }
@@ -389,7 +381,6 @@ class Connection
     /**
      * Try to connect to given host.
      *
-     * @param array $host
      * @return resource (stream)
      * @throws ConnectionException if connection setup fails
      */
@@ -428,20 +419,16 @@ class Connection
 
     /**
      * Connection established.
-     *
-     * @return boolean
      */
-    public function isConnected()
+    public function isConnected(): bool
     {
         return ($this->connection && is_resource($this->connection));
     }
 
     /**
      * Close connection.
-     *
-     * @return void
      */
-    public function disconnect()
+    public function disconnect(): void
     {
         if ($this->isConnected()) {
             @stream_socket_shutdown($this->connection, STREAM_SHUT_RDWR);
@@ -454,11 +441,9 @@ class Connection
     /**
      * Write frame to server.
      *
-     * @param Frame $stompFrame
-     * @return boolean
      * @throws ConnectionException
      */
-    public function writeFrame(Frame $stompFrame)
+    public function writeFrame(Frame $stompFrame): bool
     {
         if (!$this->isConnected()) {
             throw new ConnectionException('Not connected to any server.', $this->activeHost);
@@ -475,7 +460,7 @@ class Connection
      * @param float $timeout in seconds, supporting fractions
      * @throws ConnectionException
      */
-    private function writeData($stompFrame, $timeout)
+    private function writeData($stompFrame, $timeout): void
     {
         $data = (string) $stompFrame;
         $offset = 0;
@@ -551,11 +536,9 @@ class Connection
     /**
      * The connection onFrame handler.
      *
-     * @param Frame $frame
-     * @return Frame
      * @throws ErrorFrameException
      */
-    private function onFrame(Frame $frame)
+    private function onFrame(Frame $frame): Frame
     {
         if ($frame->isErrorFrame()) {
             throw new ErrorFrameException($frame);
@@ -622,10 +605,9 @@ class Connection
      *
      * Will return true if data is available, false if no data is detected and null if the operation was interrupted.
      *
-     * @return bool|null
      * @throws ConnectionException
      */
-    private function isDataOnStream()
+    private function isDataOnStream(): ?bool
     {
         $read = [$this->connection];
         $write = null;
@@ -672,10 +654,9 @@ class Connection
      *
      * @param float $timeout in seconds supporting fractions (microseconds)
      *
-     * @return void
      * @throws ConnectionException
      */
-    public function sendAlive($timeout = 1.0)
+    public function sendAlive($timeout = 1.0): void
     {
         if ($this->isConnected()) {
             $this->writeData(self::ALIVE, $timeout);

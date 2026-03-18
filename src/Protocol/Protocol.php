@@ -62,7 +62,6 @@ class Protocol
      *
      * @param string $login
      * @param string $passcode
-     * @param array $versions
      * @param string $host
      * @param int[] $heartbeat
      * @return \Stomp\Transport\Frame
@@ -72,7 +71,7 @@ class Protocol
         $passcode = '',
         array $versions = [],
         $host = null,
-        $heartbeat = [0, 0]
+        array $heartbeat = [0, 0]
     ) {
         $frame = $this->createFrame('CONNECT');
         $frame->legacyMode(true);
@@ -194,7 +193,6 @@ class Protocol
     /**
      * Get message acknowledge frame.
      *
-     * @param Frame $frame
      * @param string $transactionId
      * @return Frame
      */
@@ -220,7 +218,6 @@ class Protocol
     /**
      * Get message not acknowledge frame.
      *
-     * @param \Stomp\Transport\Frame $frame
      * @param string $transactionId
      * @param bool $requeue Requeue header
      * @return \Stomp\Transport\Frame
@@ -266,10 +263,8 @@ class Protocol
 
     /**
      * Client Id is set
-     *
-     * @return bool
      */
-    public function hasClientId()
+    public function hasClientId(): bool
     {
         return (bool) $this->clientId;
     }
@@ -308,9 +303,8 @@ class Protocol
      * Checks if given version is included (equal or lower) in active protocol version.
      *
      * @param string $version
-     * @return bool
      */
-    public function hasVersion($version)
+    public function hasVersion($version): bool
     {
         return version_compare($this->version, $version, '>=');
     }
@@ -319,9 +313,8 @@ class Protocol
      * Creates a Frame according to the detected STOMP version.
      *
      * @param string $command
-     * @return Frame
      */
-    protected function createFrame($command)
+    protected function createFrame($command): \Stomp\Transport\Frame
     {
         $frame = new Frame($command);
 

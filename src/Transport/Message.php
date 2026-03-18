@@ -20,7 +20,6 @@ class Message extends Frame
      * Message constructor.
      *
      * @param string $body
-     * @param array $headers
      */
     public function __construct($body, array $headers = [])
     {

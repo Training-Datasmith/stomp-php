@@ -35,7 +35,6 @@ class DurableSubscription extends ActiveMqMode
 
     /**
      * DurableSubscription constructor.
-     * @param Client $client
      * @param string $topic
      * @param string $selector
      * @param string $ack
@@ -52,16 +51,14 @@ class DurableSubscription extends ActiveMqMode
         if (is_null($subscriptionId) && substr($server, 0, 16) === 'ActiveMQ-Artemis') {
             throw new StompException('Durable subscription requires a specific subscriptionId!');
         }
-        $subscriptionId = isset($subscriptionId) ? $subscriptionId : $client->getClientId();
+        $subscriptionId = $subscriptionId ?? $client->getClientId();
         $this->subscription = new Subscription($topic, $selector, $ack, $subscriptionId);
     }
 
     /**
      * Init the subscription.
-     *
-     * @return void
      */
-    public function activate()
+    public function activate(): void
     {
         if (!$this->active) {
             $this->client->sendFrame(
@@ -83,9 +80,8 @@ class DurableSubscription extends ActiveMqMode
      * Mark durable subscription as offline.
      *
      * @see deactivate() if you want to indicate that the consumer is permanently removed.
-     * @return void
      */
-    public function inactive()
+    public function inactive(): void
     {
         if ($this->active) {
             $this->client->sendFrame(
@@ -103,9 +99,8 @@ class DurableSubscription extends ActiveMqMode
      * Permanently remove durable subscription.
      *
      * @see inactive() if you just want to indicate that the consumer is offline now.
-     * @return void
      */
-    public function deactivate()
+    public function deactivate(): void
     {
         if ($this->active) {
             $this->inactive();
@@ -133,22 +128,16 @@ class DurableSubscription extends ActiveMqMode
 
     /**
      * Ack a frame.
-     *
-     * @param Frame $frame
-     * @return void
      */
-    public function ack(Frame $frame)
+    public function ack(Frame $frame): void
     {
         $this->client->sendFrame($this->getProtocol()->getAckFrame($frame));
     }
 
     /**
      * Nack a frame.
-     *
-     * @param Frame $frame
-     * @return void
      */
-    public function nack(Frame $frame)
+    public function nack(Frame $frame): void
     {
         $this->client->sendFrame($this->getProtocol()->getNackFrame($frame));
     }

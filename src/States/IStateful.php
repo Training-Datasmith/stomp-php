@@ -22,7 +22,6 @@ interface IStateful
     /**
      * Acknowledge consumption of a message from a subscription
      *
-     * @param Frame $frame
      * @return void
      */
     public function ack(Frame $frame);
@@ -30,7 +29,6 @@ interface IStateful
     /**
      * Not acknowledge consumption of a message from a subscription
      *
-     * @param Frame $frame
      * @param bool $requeue Requeue header not supported on all brokers
      * @return void
      */
@@ -40,7 +38,6 @@ interface IStateful
      * Send a message.
      *
      * @param string $destination
-     * @param \Stomp\Transport\Message $message
      * @return bool
      */
     public function send($destination, Message $message);
@@ -74,7 +71,6 @@ interface IStateful
      * @param string $destination
      * @param string $selector
      * @param string $ack
-     * @param array  $header
      * @return int
      */
     public function subscribe($destination, $selector, $ack, array $header = []);

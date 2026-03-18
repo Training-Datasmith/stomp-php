@@ -41,7 +41,6 @@ class FrameFactory
      * Creates a frame instance out of the given frame details.
      *
      * @param string $command
-     * @param array $headers
      * @param string $body
      * @param boolean $legacyMode stomp 1.0 mode (headers)
      * @return Frame
@@ -60,12 +59,10 @@ class FrameFactory
      * Creates a new default frame instance.
      *
      * @param string $command
-     * @param array $headers
      * @param string $body
      * @param boolean $legacyMode
-     * @return Frame
      */
-    private function defaultFrame($command, array $headers, $body, $legacyMode)
+    private function defaultFrame($command, array $headers, $body, $legacyMode): \Stomp\Transport\Frame
     {
         $frame = new Frame($command, $headers, $body);
         $frame->legacyMode($legacyMode);
@@ -79,9 +76,8 @@ class FrameFactory
      * The resolver must return null/false if he won't create a frame for the request.
      *
      * @param callable $callable
-     * @return FrameFactory
      */
-    public function registerResolver($callable)
+    public function registerResolver($callable): self
     {
         array_unshift($this->resolver, $callable);
         return $this;

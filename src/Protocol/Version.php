@@ -46,7 +46,6 @@ class Version
     /**
      * Version constructor.
      *
-     * @param Frame $frame
      * @throws StompException
      */
     public function __construct(Frame $frame)
@@ -100,9 +99,8 @@ class Version
      * Check if version is same or newer than given one.
      *
      * @param string $version to check against
-     * @return boolean
      */
-    public function hasVersion($version)
+    public function hasVersion($version): bool
     {
         return version_compare($this->getVersion(), $version, '>=');
     }

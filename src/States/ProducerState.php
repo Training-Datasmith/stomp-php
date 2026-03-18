@@ -27,7 +27,7 @@ class ProducerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    public function begin()
+    public function begin(): void
     {
         $this->setState(new ProducerTransactionState($this->getClient(), $this->getBase()));
     }
@@ -46,7 +46,7 @@ class ProducerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [];
     }

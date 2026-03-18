@@ -130,7 +130,7 @@ class Client
      *
      * @param array $versions defaults to all client supported versions
      */
-    public function setVersions(array $versions)
+    public function setVersions(array $versions): void
     {
         $this->versions = $versions;
     }
@@ -141,7 +141,7 @@ class Client
      * @param string $login
      * @param string $passcode
      */
-    public function setLogin($login, $passcode)
+    public function setLogin($login, $passcode): void
     {
         $this->login = $login;
         $this->passcode = $passcode;
@@ -154,7 +154,7 @@ class Client
      *
      * @param string $host
      */
-    public function setVhostname($host = null)
+    public function setVhostname($host = null): void
     {
         $this->host = $host;
     }
@@ -186,7 +186,7 @@ class Client
      * @see \Stomp\Network\Observer\HeartbeatEmitter
      * @see \Stomp\Network\Connection::sendAlive()
      */
-    public function setHeartbeat($send = 0, $receive = 0)
+    public function setHeartbeat($send = 0, $receive = 0): void
     {
         $this->heartbeat = [$send, $receive];
     }
@@ -194,11 +194,10 @@ class Client
     /**
      * Connect to server
      *
-     * @return boolean
      * @throws StompException
      * @see setVhostname
      */
-    public function connect()
+    public function connect(): bool
     {
         if ($this->isConnected()) {
             return true;
@@ -258,7 +257,6 @@ class Client
      *
      * @param string $destination Destination queue
      * @param string|Frame $msg Message
-     * @param array $header
      * @param boolean $sync Perform request synchronously
      * @return boolean
      */
@@ -276,7 +274,6 @@ class Client
     /**
      * Send a frame.
      *
-     * @param Frame $frame
      * @param boolean $sync
      * @return boolean
      */
@@ -286,19 +283,17 @@ class Client
             $this->connect();
         }
         // determine if client was configured to write sync or not
-        $writeSync = $sync !== null ? $sync : $this->sync;
+        $writeSync = $sync ?? $this->sync;
         if ($writeSync) {
             return $this->sendFrameExpectingReceipt($frame);
-        } else {
-            return $this->connection->writeFrame($frame);
         }
+        return $this->connection->writeFrame($frame);
     }
 
 
     /**
      * Write frame to server and expect an matching receipt frame
      *
-     * @param Frame $stompFrame
      * @return bool
      */
     protected function sendFrameExpectingReceipt(Frame $stompFrame)
@@ -314,11 +309,10 @@ class Client
      * Wait for an receipt
      *
      * @param string $receipt
-     * @return boolean
      * @throws UnexpectedResponseException If response has an invalid receipt.
      * @throws MissingReceiptException     If no receipt is received.
      */
-    protected function waitForReceipt($receipt)
+    protected function waitForReceipt($receipt): bool
     {
         $stopAfter = $this->calculateReceiptWaitEnd();
         while (true) {
@@ -326,12 +320,10 @@ class Client
                 if ($frame->getCommand() == 'RECEIPT') {
                     if ($frame['receipt-id'] == $receipt) {
                         return true;
-                    } else {
-                        throw new UnexpectedResponseException($frame, sprintf('Expected receipt id %s', $receipt));
                     }
-                } else {
-                    $this->unprocessedFrames[] = $frame;
+                    throw new UnexpectedResponseException($frame, sprintf('Expected receipt id %s', $receipt));
                 }
+                $this->unprocessedFrames[] = $frame;
             }
             if (microtime(true) >= $stopAfter) {
                 break;
@@ -364,9 +356,8 @@ class Client
     /**
      * Graceful disconnect from the server
      * @param bool $sync
-     * @return void
      */
-    public function disconnect($sync = false)
+    public function disconnect($sync = false): void
     {
         try {
             if ($this->connection && $this->connection->isConnected()) {
@@ -408,10 +399,8 @@ class Client
 
     /**
      * Check if client session has ben established
-     *
-     * @return boolean
      */
-    public function isConnected()
+    public function isConnected(): bool
     {
         return !empty($this->sessionId) && $this->connection->isConnected();
     }
@@ -449,9 +438,8 @@ class Client
 
     /**
      * @param string $clientId
-     * @return Client
      */
-    public function setClientId($clientId)
+    public function setClientId($clientId): self
     {
         $this->clientId = $clientId;
         return $this;
@@ -463,7 +451,7 @@ class Client
      *
      * @param float $seconds
      */
-    public function setReceiptWait($seconds)
+    public function setReceiptWait($seconds): void
     {
         $this->receiptWait = $seconds;
     }
@@ -483,7 +471,7 @@ class Client
      *
      * @param boolean $sync
      */
-    public function setSync($sync)
+    public function setSync($sync): void
     {
         $this->sync = $sync;
     }

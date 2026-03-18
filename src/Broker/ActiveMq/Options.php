@@ -34,7 +34,6 @@ class Options implements ArrayAccess
 
     /**
      * Options constructor.
-     * @param array $options
      */
     public function __construct(array $options = [])
     {
@@ -56,7 +55,7 @@ class Options implements ArrayAccess
     }
 
     #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (in_array($offset, $this->extensions, true)) {
             $this->options[$offset] = $value;
@@ -64,7 +63,7 @@ class Options implements ArrayAccess
     }
 
     #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->options[$offset]);
     }
@@ -75,44 +74,44 @@ class Options implements ArrayAccess
     }
 
 
-    public function activateRetroactive()
+    public function activateRetroactive(): self
     {
         $this['activemq.retroactive'] = 'true';
         return $this;
     }
-    public function activateExclusive()
+    public function activateExclusive(): self
     {
         $this['activemq.exclusive'] = 'true';
         return $this;
     }
 
-    public function activateDispatchAsync()
+    public function activateDispatchAsync(): self
     {
         $this['activemq.dispatchAsync'] = 'true';
         return $this;
     }
 
-    public function setPriority($priority)
+    public function setPriority($priority): self
     {
         $this['activemq.priority'] = $priority;
         return $this;
     }
 
 
-    public function setPrefetchSize($size)
+    public function setPrefetchSize($size): self
     {
         $this['activemq.prefetchSize'] = max($size, 1);
         return $this;
     }
 
 
-    public function activateNoLocal()
+    public function activateNoLocal(): self
     {
         $this['activemq.noLocal'] = 'true';
         return $this;
     }
 
-    public function setMaximumPendingLimit($limit)
+    public function setMaximumPendingLimit($limit): self
     {
         $this['activemq.maximumPendingMessageLimit'] = $limit;
         return $this;

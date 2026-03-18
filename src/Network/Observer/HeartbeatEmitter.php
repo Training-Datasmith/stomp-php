@@ -61,7 +61,6 @@ class HeartbeatEmitter extends AbstractBeats
      * A higher value increases the risk that a beat is send after a timeout has occurred.
      * A lower value increases the beats and adds overhead to the connection.
      *
-     * @param Connection $connection
      * @param float $intervalUsage
      */
     public function __construct(Connection $connection, $intervalUsage = 0.65)
@@ -75,7 +74,7 @@ class HeartbeatEmitter extends AbstractBeats
      *
      * @param bool $pessimistic
      */
-    public function setPessimistic($pessimistic)
+    public function setPessimistic($pessimistic): void
     {
         $this->pessimistic = $pessimistic;
     }
@@ -95,8 +94,6 @@ class HeartbeatEmitter extends AbstractBeats
      *
      * Class should set client or server interval.
      *
-     * @param Frame $frame
-     * @param array $beats
      * @return void
      */
     protected function onHeartbeatFrame(Frame $frame, array $beats)
@@ -129,9 +126,8 @@ class HeartbeatEmitter extends AbstractBeats
      * Verify that the client configured heartbeats don't conflict with the connection read timeout.
      *
      * @param float $interval
-     * @return void
      */
-    private function assertReadTimeoutSufficient($interval)
+    private function assertReadTimeoutSufficient($interval): void
     {
         $readTimeout = $this->connection->getReadTimeout();
         $readTimeoutMs = ($readTimeout[0] * 1000) + ($readTimeout[1] / 1000);

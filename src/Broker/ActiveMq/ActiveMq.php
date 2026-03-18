@@ -132,9 +132,8 @@ class ActiveMq extends Protocol
      * Prefetch Size for subscriptions
      *
      * @param int $prefetchSize
-     * @return ActiveMq
      */
-    public function setPrefetchSize($prefetchSize)
+    public function setPrefetchSize($prefetchSize): self
     {
         $this->prefetchSize = $prefetchSize;
         return $this;

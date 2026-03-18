@@ -27,7 +27,6 @@ class ConnectionException extends StompException
     /**
      *
      * @param string $info
-     * @param array $connection
      * @param ConnectionException $previous
      */
     public function __construct($info, array $connection = [], ?ConnectionException $previous = null)
@@ -56,6 +55,6 @@ class ConnectionException extends StompException
 
     protected function getHostname()
     {
-        return isset($this->connectionInfo['host']) ? $this->connectionInfo['host'] : null;
+        return $this->connectionInfo['host'] ?? null;
     }
 }

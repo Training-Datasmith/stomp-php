@@ -23,7 +23,6 @@ class UnsupportedBrokerException extends StompException
 {
 
     /**
-     * @param Protocol $detectedProtocol
      * @param string $expectedProtocol
      */
     public function __construct(Protocol $detectedProtocol, $expectedProtocol)

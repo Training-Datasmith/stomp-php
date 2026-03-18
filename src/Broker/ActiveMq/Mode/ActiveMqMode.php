@@ -34,8 +34,6 @@ abstract class ActiveMqMode
 
     /**
      * ActiveMqMode constructor.
-     *
-     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -66,7 +64,6 @@ abstract class ActiveMqMode
     }
 
     /**
-     * @param Options $options
      * @return ActiveMqMode
      */
     public function setOptions(Options $options)

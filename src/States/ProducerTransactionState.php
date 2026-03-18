@@ -33,7 +33,7 @@ class ProducerTransactionState extends ProducerState
     /**
      * @inheritdoc
      */
-    public function commit()
+    public function commit(): void
     {
         $this->transactionCommit();
         $this->setState(new ProducerState($this->getClient(), $this->getBase()), parent::getOptions());
@@ -42,7 +42,7 @@ class ProducerTransactionState extends ProducerState
     /**
      * @inheritdoc
      */
-    public function abort()
+    public function abort(): void
     {
         $this->transactionAbort();
         $this->setState(new ProducerState($this->getClient(), $this->getBase()), parent::getOptions());

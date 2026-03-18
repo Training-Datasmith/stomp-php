@@ -70,7 +70,7 @@ class ConsumerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    public function ack(Frame $frame)
+    public function ack(Frame $frame): void
     {
         $this->getClient()->sendFrame($this->getProtocol()->getAckFrame($frame), false);
     }
@@ -78,7 +78,7 @@ class ConsumerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    public function nack(Frame $frame, $requeue = null)
+    public function nack(Frame $frame, $requeue = null): void
     {
         $this->getClient()->sendFrame($this->getProtocol()->getNackFrame($frame, null, $requeue), false);
     }
@@ -94,7 +94,7 @@ class ConsumerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    public function begin()
+    public function begin(): void
     {
         $this->setState(new ConsumerTransactionState($this->getClient(), $this->getBase()), $this->getOptions());
     }
@@ -121,7 +121,7 @@ class ConsumerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    public function unsubscribe($subscriptionId = null)
+    public function unsubscribe($subscriptionId = null): void
     {
         if ($this->endSubscription($subscriptionId)) {
             $this->setState(
@@ -137,7 +137,7 @@ class ConsumerState extends StateTemplate
      * @param string $subscriptionId
      * @return bool true if last one was closed
      */
-    protected function endSubscription($subscriptionId = null)
+    protected function endSubscription($subscriptionId = null): bool
     {
         if (!$subscriptionId) {
             $subscriptionId = $this->subscriptions->getLast()->getSubscriptionId();
@@ -182,7 +182,7 @@ class ConsumerState extends StateTemplate
     /**
      * @inheritdoc
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             'subscriptions' => $this->subscriptions

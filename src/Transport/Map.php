@@ -22,7 +22,6 @@ class Map extends Message
      * Constructor
      *
      * @param array|object|string $body string will get decoded (receive), otherwise the body will be encoded (send)
-     * @param array $headers
      * @param string $command
      */
     public function __construct($body, array $headers = [], $command = 'SEND')

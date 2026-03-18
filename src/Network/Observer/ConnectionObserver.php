@@ -49,7 +49,6 @@ interface ConnectionObserver
     /**
      * Indicates that a frame has been sent to the server.
      *
-     * @param Frame $frame
      * @return void
      */
     public function sentFrame(Frame $frame);

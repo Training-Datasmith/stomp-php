@@ -68,8 +68,6 @@ abstract class AbstractBeats implements ConnectionObserver
      * @see $intervalClient
      * @see $intervalServer
      *
-     * @param Frame $frame
-     * @param array $beats
      * @return void
      */
     abstract protected function onHeartbeatFrame(Frame $frame, array $beats);
@@ -168,11 +166,8 @@ abstract class AbstractBeats implements ConnectionObserver
 
     /**
      * Returns the heartbeat header.
-     *
-     * @param Frame $frame
-     * @return array
      */
-    private function getHeartbeats(Frame $frame)
+    private function getHeartbeats(Frame $frame): array
     {
         $beats = $frame['heart-beat'];
         if ($beats) {
@@ -183,11 +178,8 @@ abstract class AbstractBeats implements ConnectionObserver
 
     /**
      * Enables the delay detection when preconditions are fulfilled.
-     *
-     * @param Frame $frame
-     * @return void
      */
-    private function enable(Frame $frame)
+    private function enable(Frame $frame): void
     {
         $this->onHeartbeatFrame($frame, $this->getHeartbeats($frame));
         if ($this->intervalServer && $this->intervalClient) {
@@ -203,7 +195,7 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * @inheritdoc
      */
-    public function receivedFrame(Frame $frame)
+    public function receivedFrame(Frame $frame): void
     {
         if ($this->enabled) {
             $this->onServerActivity();
@@ -218,7 +210,7 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * @inheritdoc
      */
-    public function sentFrame(Frame $frame)
+    public function sentFrame(Frame $frame): void
     {
         if ($this->enabled) {
             $this->onClientActivity();
@@ -232,7 +224,7 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * @inheritdoc
      */
-    public function emptyLineReceived()
+    public function emptyLineReceived(): void
     {
         $this->onServerActivity();
     }
@@ -240,7 +232,7 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * @inheritdoc
      */
-    public function emptyRead()
+    public function emptyRead(): void
     {
         $this->onPotentialConnectionStateActivity();
     }
@@ -248,7 +240,7 @@ abstract class AbstractBeats implements ConnectionObserver
     /**
      * @inheritdoc
      */
-    public function emptyBuffer()
+    public function emptyBuffer(): void
     {
         $this->onPotentialConnectionStateActivity();
     }

@@ -103,11 +103,8 @@ class Subscription
 
     /**
      * Checks if the given frame belongs to current Subscription.
-     *
-     * @param Frame $frame
-     * @return bool
      */
-    public function belongsTo(Frame $frame)
+    public function belongsTo(Frame $frame): bool
     {
         return ($frame['subscription'] == $this->subscriptionId);
     }

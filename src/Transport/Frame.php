@@ -57,7 +57,6 @@ class Frame implements ArrayAccess
      * Constructor
      *
      * @param string $command
-     * @param array  $headers
      * @param string $body
      */
     public function __construct($command = null, array $headers = [], $body = null)
@@ -71,11 +70,8 @@ class Frame implements ArrayAccess
      * Add given headers to currently set headers.
      *
      * Will override existing keys.
-     *
-     * @param array $header
-     * @return Frame
      */
-    public function addHeaders(array $header)
+    public function addHeaders(array $header): self
     {
         $this->headers += $header;
         return $this;
@@ -93,10 +89,8 @@ class Frame implements ArrayAccess
 
     /**
      * Is error frame.
-     *
-     * @return boolean
      */
-    public function isErrorFrame()
+    public function isErrorFrame(): bool
     {
         return ($this->command == 'ERROR');
     }
@@ -106,7 +100,7 @@ class Frame implements ArrayAccess
      *
      * @param bool|false $expected
      */
-    public function expectLengthHeader($expected = false)
+    public function expectLengthHeader($expected = false): void
     {
         $this->addLengthHeader = $expected;
     }
@@ -116,7 +110,7 @@ class Frame implements ArrayAccess
      *
      * @param bool|false $legacy
      */
-    public function legacyMode($legacy = false)
+    public function legacyMode($legacy = false): void
     {
         $this->legacyMode = $legacy;
     }
@@ -163,10 +157,8 @@ class Frame implements ArrayAccess
 
     /**
      * Convert frame to transportable string
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $data = $this->command . "\n";
 
@@ -187,10 +179,8 @@ class Frame implements ArrayAccess
 
     /**
      * Size of Frame body.
-     *
-     * @return int
      */
-    protected function getBodySize()
+    protected function getBodySize(): int
     {
         return strlen($this->body);
     }
@@ -199,9 +189,8 @@ class Frame implements ArrayAccess
      * Encodes header values.
      *
      * @param string $value
-     * @return string
      */
-    protected function encodeHeaderValue($value)
+    protected function encodeHeaderValue($value): string
     {
         if ($this->legacyMode) {
             return str_replace(["\n"], ['\n'], $value);
@@ -224,17 +213,14 @@ class Frame implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (isset($this->headers[$offset])) {
-            return $this->headers[$offset];
-        }
-        return null;
+        return $this->headers[$offset] ?? null;
     }
 
     /**
      * @inheritdoc
      */
     #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($value !== null) {
             $this->headers[$offset] = $value;
@@ -246,7 +232,7 @@ class Frame implements ArrayAccess
      * @inheritdoc
      */
     #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->headers[$offset]);
     }

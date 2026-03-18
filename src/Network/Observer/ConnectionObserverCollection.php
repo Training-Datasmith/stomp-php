@@ -26,10 +26,9 @@ class ConnectionObserverCollection implements ConnectionObserver
     /**
      * Adds new observers to the collection.
      *
-     * @param ConnectionObserver $observer
      * @return ConnectionObserverCollection this collection
      */
-    public function addObserver(ConnectionObserver $observer)
+    public function addObserver(ConnectionObserver $observer): self
     {
         if (!in_array($observer, $this->observers, true)) {
             $this->observers[] = $observer;
@@ -40,10 +39,9 @@ class ConnectionObserverCollection implements ConnectionObserver
     /**
      * Removes the observers from the collection.
      *
-     * @param ConnectionObserver $observer
      * @return ConnectionObserverCollection this collection
      */
-    public function removeObserver(ConnectionObserver $observer)
+    public function removeObserver(ConnectionObserver $observer): self
     {
         $index = array_search($observer, $this->observers, true);
         if ($index !== false) {
@@ -57,17 +55,15 @@ class ConnectionObserverCollection implements ConnectionObserver
      *
      * @return ConnectionObserver[]
      */
-    public function getObservers()
+    public function getObservers(): array
     {
         return array_values($this->observers);
     }
 
     /**
      * Indicates that during a read call no frame was received, but an EOL line.
-     *
-     * @return void
      */
-    public function emptyLineReceived()
+    public function emptyLineReceived(): void
     {
         foreach ($this->observers as $item) {
             $item->emptyLineReceived();
@@ -78,9 +74,8 @@ class ConnectionObserverCollection implements ConnectionObserver
      * Indicates that a frame has been received.
      *
      * @param Frame $frame that has been received
-     * @return void
      */
-    public function receivedFrame(Frame $frame)
+    public function receivedFrame(Frame $frame): void
     {
         foreach ($this->observers as $item) {
             $item->receivedFrame($frame);
@@ -89,11 +84,8 @@ class ConnectionObserverCollection implements ConnectionObserver
 
     /**
      * Indicates that a frame has been transmitted.
-     *
-     * @param Frame $frame
-     * @return void
      */
-    public function sentFrame(Frame $frame)
+    public function sentFrame(Frame $frame): void
     {
         foreach ($this->observers as $item) {
             $item->sentFrame($frame);
@@ -102,10 +94,8 @@ class ConnectionObserverCollection implements ConnectionObserver
 
     /**
      * Indicates that the connection has no pending data.
-     *
-     * @return void
      */
-    public function emptyBuffer()
+    public function emptyBuffer(): void
     {
         foreach ($this->observers as $item) {
             $item->emptyBuffer();
@@ -114,10 +104,8 @@ class ConnectionObserverCollection implements ConnectionObserver
 
     /**
      * Indicates that the connection tried to read signaled data, but no data was returned.
-     *
-     * @return void
      */
-    public function emptyRead()
+    public function emptyRead(): void
     {
         foreach ($this->observers as $item) {
             $item->emptyRead();

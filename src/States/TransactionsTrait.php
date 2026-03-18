@@ -42,8 +42,6 @@ trait TransactionsTrait
 
     /**
      * Init the transaction state.
-     *
-     * @param array $options
      */
     protected function initTransaction(array $options = [])
     {
@@ -59,10 +57,8 @@ trait TransactionsTrait
 
     /**
      * Options for this transaction state.
-     *
-     * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return ['transactionId' => $this->transactionId];
     }
@@ -71,7 +67,6 @@ trait TransactionsTrait
      * Send a message within this transaction.
      *
      * @param string $destination
-     * @param \Stomp\Transport\Message $message
      * @return bool
      */
     public function send($destination, Message $message)

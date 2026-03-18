@@ -31,8 +31,6 @@ class SimpleStomp
 
     /**
      * LegacyStomp constructor.
-     *
-     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -53,10 +51,8 @@ class SimpleStomp
      * Register to listen to a given destination
      *
      * @param string $destination Destination queue
-     * @param null $subscriptionId
      * @param string $ack
      * @param string $selector
-     * @param array $header
      * @return bool
      */
     public function subscribe($destination, $subscriptionId = null, $ack = 'auto', $selector = null, array $header = [])
@@ -78,7 +74,6 @@ class SimpleStomp
      * Send a message
      *
      * @param string $destination
-     * @param Message $message
      * @return bool
      * @throws StompException
      */
@@ -92,7 +87,6 @@ class SimpleStomp
      *
      * @param string $destination
      * @param string $subscriptionId
-     * @param array $header
      * @return boolean
      * @throws StompException
      */
@@ -140,22 +134,16 @@ class SimpleStomp
 
     /**
      * Acknowledge consumption of a message from a subscription
-     *
-     * @param Frame $frame
-     * @return void
      */
-    public function ack(Frame $frame)
+    public function ack(Frame $frame): void
     {
         $this->client->sendFrame($this->getProtocol()->getAckFrame($frame), false);
     }
 
     /**
      * Not acknowledge consumption of a message from a subscription
-     *
-     * @param Frame $frame
-     * @return void
      */
-    public function nack(Frame $frame)
+    public function nack(Frame $frame): void
     {
         $this->client->sendFrame($this->getProtocol()->getNackFrame($frame), false);
     }

@@ -20,7 +20,6 @@ class Bytes extends Message
      * Constructor
      *
      * @param string $body
-     * @param array $headers
      */
     public function __construct($body, array $headers = [])
     {
@@ -32,7 +31,7 @@ class Bytes extends Message
     /**
      * @inheritdoc
      */
-    protected function getBodySize()
+    protected function getBodySize(): int
     {
         return ini_get('mbstring.func_overload') ? mb_strlen($this->getBody(), '8bit') : strlen($this->getBody());
     }
