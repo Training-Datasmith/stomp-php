@@ -174,7 +174,7 @@ class Connection
 
             if ($options) {
                 parse_str($options, $connectionOptions);
-                $this->params = $connectionOptions + $this->params;
+                $this->params = array_intersect_key($connectionOptions, $this->params) + $this->params;
             }
 
             if ($scheme != 'failover') {
