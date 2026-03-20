@@ -1,18 +1,16 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\Broker\Exception;
 
-use Stomp\Exception\StompException;
+use Stomp\Exception\Stomp_Exception;
 use Stomp\Protocol\Protocol;
-
 /**
  * UnsupportedBrokerException
  *
@@ -21,15 +19,13 @@ use Stomp\Protocol\Protocol;
  * @package Stomp\Broker\Exception
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class UnsupportedBrokerException extends StompException
+class Unsupported_Broker_Exception extends Stomp_Exception
 {
     /**
      * @param string $expectedProtocol
      */
-    public function __construct(Protocol $detectedProtocol, $expectedProtocol)
+    public function __construct(Protocol $detected_protocol, $expected_protocol)
     {
-        parent::__construct(
-            sprintf('The current broker (%s) is no %s.', get_class($detectedProtocol), $expectedProtocol)
-        );
+        parent::__construct(sprintf('The current broker (%s) is no %s.', get_class($detected_protocol), $expected_protocol));
     }
 }

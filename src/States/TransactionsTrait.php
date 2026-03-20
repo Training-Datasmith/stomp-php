@@ -1,68 +1,59 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\States;
 
 use Stomp\Client;
 use Stomp\Protocol\Protocol;
 use Stomp\Transport\Message;
-use Stomp\Util\IdGenerator;
-
+use Stomp\Util\Id_Generator;
 /**
  * TransactionsTrait provides base logic for all transaction based states.
  *
  * @package Stomp\States
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-trait TransactionsTrait
+trait Transactions_Trait
 {
     /**
      * @return Protocol
      */
-    abstract public function getProtocol();
-
+    abstract public function get_protocol();
     /**
      * @return Client
      */
-    abstract public function getClient();
-
+    abstract public function get_client();
     /**
      * Id used for current transaction.
      *
      * @var int|string
      */
-    protected $transactionId;
-
+    protected $transaction_id;
     /**
      * Init the transaction state.
      */
-    protected function initTransaction(array $options = [])
+    protected function init_transaction(array $options = [])
     {
         if (!isset($options['transactionId'])) {
-            $this->transactionId = IdGenerator::generateId();
-            $this->getClient()->sendFrame(
-                $this->getProtocol()->getBeginFrame($this->transactionId)
-            );
+            $this->transaction_id = Id_Generator::generate_id();
+            $this->get_client()->send_frame($this->get_protocol()->get_begin_frame($this->transaction_id));
         } else {
-            $this->transactionId = $options['transactionId'];
+            $this->transaction_id = $options['transactionId'];
         }
     }
-
     /**
      * Options for this transaction state.
      */
-    protected function getOptions(): array
+    protected function get_options(): array
     {
-        return ['transactionId' => $this->transactionId];
+        return ['transactionId' => $this->transaction_id];
     }
-
     /**
      * Send a message within this transaction.
      *
@@ -71,24 +62,22 @@ trait TransactionsTrait
      */
     public function send($destination, Message $message)
     {
-        return $this->getClient()->send($destination, $message, ['transaction' => $this->transactionId], false);
+        return $this->get_client()->send($destination, $message, ['transaction' => $this->transaction_id], false);
     }
-
     /**
      * Commit current transaction.
      */
-    protected function transactionCommit()
+    protected function transaction_commit()
     {
-        $this->getClient()->sendFrame($this->getProtocol()->getCommitFrame($this->transactionId));
-        IdGenerator::releaseId($this->transactionId);
+        $this->get_client()->send_frame($this->get_protocol()->get_commit_frame($this->transaction_id));
+        Id_Generator::release_id($this->transaction_id);
     }
-
     /**
      * Abort the current transaction.
      */
-    protected function transactionAbort()
+    protected function transaction_abort()
     {
-        $this->getClient()->sendFrame($this->getProtocol()->getAbortFrame($this->transactionId));
-        IdGenerator::releaseId($this->transactionId);
+        $this->get_client()->send_frame($this->get_protocol()->get_abort_frame($this->transaction_id));
+        Id_Generator::release_id($this->transaction_id);
     }
 }

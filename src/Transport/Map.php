@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\Transport;
 
 /**
@@ -19,7 +17,6 @@ namespace Stomp\Transport;
 class Map extends Message
 {
     public $map;
-
     /**
      * Constructor
      *
@@ -38,13 +35,12 @@ class Map extends Message
             $this->map = $body;
         }
     }
-
     /**
      * Returns the received decoded json.
      *
      * @return mixed
      */
-    public function getMap()
+    public function get_map()
     {
         return $this->map;
     }

@@ -1,49 +1,45 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\Network\Observer;
 
 use Stomp\Transport\Frame;
-
 /**
  * ConnectionObserverCollection a collection of connection observers.
  *
  * @package Stomp\Network\Observer
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class ConnectionObserverCollection implements ConnectionObserver
+class Connection_Observer_Collection implements Connection_Observer
 {
     /**
      * @var ConnectionObserver[]
      */
     private $observers = [];
-
     /**
      * Adds new observers to the collection.
      *
      * @return ConnectionObserverCollection this collection
      */
-    public function addObserver(ConnectionObserver $observer): self
+    public function add_observer(Connection_Observer $observer): self
     {
         if (!in_array($observer, $this->observers, true)) {
             $this->observers[] = $observer;
         }
         return $this;
     }
-
     /**
      * Removes the observers from the collection.
      *
      * @return ConnectionObserverCollection this collection
      */
-    public function removeObserver(ConnectionObserver $observer): self
+    public function remove_observer(Connection_Observer $observer): self
     {
         $index = array_search($observer, $this->observers, true);
         if ($index !== false) {
@@ -51,66 +47,60 @@ class ConnectionObserverCollection implements ConnectionObserver
         }
         return $this;
     }
-
     /**
      * Returns the observers inside this collection.
      *
      * @return ConnectionObserver[]
      */
-    public function getObservers(): array
+    public function get_observers(): array
     {
         return array_values($this->observers);
     }
-
     /**
      * Indicates that during a read call no frame was received, but an EOL line.
      */
-    public function emptyLineReceived(): void
+    public function empty_line_received(): void
     {
         foreach ($this->observers as $item) {
-            $item->emptyLineReceived();
+            $item->empty_line_received();
         }
     }
-
     /**
      * Indicates that a frame has been received.
      *
      * @param Frame $frame that has been received
      */
-    public function receivedFrame(Frame $frame): void
+    public function received_frame(Frame $frame): void
     {
         foreach ($this->observers as $item) {
-            $item->receivedFrame($frame);
+            $item->received_frame($frame);
         }
     }
-
     /**
      * Indicates that a frame has been transmitted.
      */
-    public function sentFrame(Frame $frame): void
+    public function sent_frame(Frame $frame): void
     {
         foreach ($this->observers as $item) {
-            $item->sentFrame($frame);
+            $item->sent_frame($frame);
         }
     }
-
     /**
      * Indicates that the connection has no pending data.
      */
-    public function emptyBuffer(): void
+    public function empty_buffer(): void
     {
         foreach ($this->observers as $item) {
-            $item->emptyBuffer();
+            $item->empty_buffer();
         }
     }
-
     /**
      * Indicates that the connection tried to read signaled data, but no data was returned.
      */
-    public function emptyRead(): void
+    public function empty_read(): void
     {
         foreach ($this->observers as $item) {
-            $item->emptyRead();
+            $item->empty_read();
         }
     }
 }

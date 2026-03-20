@@ -1,22 +1,20 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp;
 
-use Stomp\States\IStateful;
-use Stomp\States\Meta\SubscriptionList;
-use Stomp\States\ProducerState;
-use Stomp\States\StateSetter;
+use Stomp\States\I_Stateful;
+use Stomp\States\Meta\Subscription_List;
+use Stomp\States\Producer_State;
+use Stomp\States\State_Setter;
 use Stomp\Transport\Frame;
 use Stomp\Transport\Message;
-
 /**
  * Stateful Stomp Client
  *
@@ -26,7 +24,7 @@ use Stomp\Transport\Message;
  * @package Stomp
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class StatefulStomp extends StateSetter implements IStateful
+class Stateful_Stomp extends State_Setter implements I_Stateful
 {
     /**
      * active state
@@ -34,21 +32,18 @@ class StatefulStomp extends StateSetter implements IStateful
      * @var IStateful
      */
     private $state;
-
     /**
      * @var Client
      */
     private $client;
-
     /**
      * StatefulStomp constructor.
      */
     public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->state = new ProducerState($client, $this);
+        $this->state = new Producer_State($client, $this);
     }
-
     /**
      * Acknowledge consumption of a message from a subscription
      */
@@ -56,7 +51,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         $this->state->ack($frame);
     }
-
     /**
      * Not acknowledge consumption of a message from a subscription
      *
@@ -66,7 +60,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         $this->state->nack($frame, $requeue);
     }
-
     /**
      * Send a message.
      *
@@ -77,7 +70,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         return $this->state->send($destination, $message);
     }
-
     /**
      * Begins an transaction.
      */
@@ -85,7 +77,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         $this->state->begin();
     }
-
     /**
      * Commit current transaction.
      */
@@ -93,7 +84,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         $this->state->commit();
     }
-
     /**
      * Abort current transaction.
      */
@@ -101,7 +91,6 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         $this->state->abort();
     }
-
     /**
      * Subscribe to given destination.
      *
@@ -116,27 +105,24 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         return $this->state->subscribe($destination, $selector, $ack, $header);
     }
-
     /**
      * Unsubscribe from current or given destination.
      *
      * @param int $subscriptionId
      */
-    public function unsubscribe($subscriptionId = null): void
+    public function unsubscribe($subscription_id = null): void
     {
-        $this->state->unsubscribe($subscriptionId);
+        $this->state->unsubscribe($subscription_id);
     }
-
     /**
      * Returns as list of all active subscriptions.
      *
      * @return SubscriptionList
      */
-    public function getSubscriptions()
+    public function get_subscriptions()
     {
-        return $this->state->getSubscriptions();
+        return $this->state->get_subscriptions();
     }
-
     /**
      * Read a frame
      *
@@ -146,33 +132,30 @@ class StatefulStomp extends StateSetter implements IStateful
     {
         return $this->state->read();
     }
-
     /**
      * Current State
      *
      * @return IStateful
      */
-    public function getState()
+    public function get_state()
     {
         return $this->state;
     }
-
     /**
      * Changes the current state.
      *
      * @return mixed
      */
-    protected function setState(IStateful $state)
+    protected function set_state(I_Stateful $state)
     {
         $this->state = $state;
     }
-
     /**
      * Returns the used client.
      *
      * @return Client
      */
-    public function getClient()
+    public function get_client()
     {
         return $this->client;
     }

@@ -1,21 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace Stomp\Broker\Rabbit_Mq;
 
-namespace Stomp\Broker\RabbitMq;
-
-use Stomp\Exception\StompException;
+use Stomp\Exception\Stomp_Exception;
 use Stomp\Protocol\Protocol;
 use Stomp\Protocol\Version;
 use Stomp\Transport\Frame;
-
 /**
  * RabbitMq Stomp dialect.
  *
@@ -26,16 +23,14 @@ use Stomp\Transport\Frame;
  * @author Michael Caplan <mcaplan@labnet.net>
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class RabbitMq extends Protocol
+class Rabbit_Mq extends Protocol
 {
     /**
      * Prefetch Size for subscriptions.
      *
      * @var int
      */
-
-    private $prefetchCount = 1;
-
+    private $prefetch_count = 1;
     /**
      * RabbitMq subscribe frame.
      *
@@ -46,21 +41,15 @@ class RabbitMq extends Protocol
      * @param boolean|false $durable durable subscription
      * @return Frame
      */
-    public function getSubscribeFrame(
-        $destination,
-        $subscriptionId = null,
-        $ack = 'auto',
-        $selector = null,
-        $durable = false
-    ) {
-        $frame = parent::getSubscribeFrame($destination, $subscriptionId, $ack, $selector);
-        $frame['prefetch-count'] = $this->prefetchCount;
+    public function get_subscribe_frame($destination, $subscription_id = null, $ack = 'auto', $selector = null, $durable = false)
+    {
+        $frame = parent::get_subscribe_frame($destination, $subscription_id, $ack, $selector);
+        $frame['prefetch-count'] = $this->prefetch_count;
         if ($durable) {
             $frame['persistent'] = 'true';
         }
         return $frame;
     }
-
     /**
      * RabbitMq unsubscribe frame.
      *
@@ -69,35 +58,32 @@ class RabbitMq extends Protocol
      * @param bool|false $durable
      * @return \Stomp\Transport\Frame
      */
-    public function getUnsubscribeFrame($destination, $subscriptionId = null, $durable = false)
+    public function get_unsubscribe_frame($destination, $subscription_id = null, $durable = false)
     {
-        $frame = parent::getUnsubscribeFrame($destination, $subscriptionId);
+        $frame = parent::get_unsubscribe_frame($destination, $subscription_id);
         if ($durable) {
             $frame['persistent'] = 'true';
         }
         return $frame;
     }
-
     /**
      * Prefetch Count for subscriptions
      *
      * @return int
      */
-    public function getPrefetchCount()
+    public function get_prefetch_count()
     {
-        return $this->prefetchCount;
+        return $this->prefetch_count;
     }
-
     /**
      * Prefetch Count for subscriptions
      *
      * @param int $prefetchCount
      */
-    public function setPrefetchCount($prefetchCount): void
+    public function set_prefetch_count($prefetch_count): void
     {
-        $this->prefetchCount = $prefetchCount;
+        $this->prefetch_count = $prefetch_count;
     }
-
     /**
      * Get message not acknowledge frame.
      *
@@ -106,26 +92,25 @@ class RabbitMq extends Protocol
      * @return \Stomp\Transport\Frame
      * @throws StompException
      */
-    public function getNackFrame(Frame $frame, $transactionId = null, $requeue = null)
+    public function get_nack_frame(Frame $frame, $transaction_id = null, $requeue = null)
     {
-        if ($this->getVersion() === Version::VERSION_1_0) {
-            throw new StompException('Stomp Version 1.0 has no support for NACK Frames.');
+        if ($this->get_version() === Version::VERSION_1_0) {
+            throw new Stomp_Exception('Stomp Version 1.0 has no support for NACK Frames.');
         }
-        $nack = $this->createFrame('NACK');
+        $nack = $this->create_frame('NACK');
         if ($requeue !== null) {
-            $nack->addHeaders(['requeue' => $requeue ? 'true' : 'false']);
+            $nack->add_headers(['requeue' => $requeue ? 'true' : 'false']);
         }
-        $nack['transaction'] = $transactionId;
-        if ($this->hasVersion(Version::VERSION_1_2)) {
-            $nack['id'] = $frame->getMessageId();
+        $nack['transaction'] = $transaction_id;
+        if ($this->has_version(Version::VERSION_1_2)) {
+            $nack['id'] = $frame->get_message_id();
         } else {
-            $nack['message-id'] = $frame->getMessageId();
-            if ($this->hasVersion(Version::VERSION_1_1)) {
+            $nack['message-id'] = $frame->get_message_id();
+            if ($this->has_version(Version::VERSION_1_1)) {
                 $nack['subscription'] = $frame['subscription'];
             }
         }
-
-        $nack['message-id'] = $frame->getMessageId();
+        $nack['message-id'] = $frame->get_message_id();
         return $nack;
     }
 }

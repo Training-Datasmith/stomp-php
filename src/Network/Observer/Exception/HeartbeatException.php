@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\Network\Observer\Exception;
 
 /**
@@ -16,7 +15,7 @@ namespace Stomp\Network\Observer\Exception;
  * @package src\Network\Observer\Exception
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class HeartbeatException extends \RuntimeException
+class Heartbeat_Exception extends \RuntimeException
 {
     /**
      * ClientHeartbeatException constructor.

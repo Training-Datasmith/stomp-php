@@ -1,25 +1,23 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\States;
 
-use Stomp\States\Meta\SubscriptionList;
+use Stomp\States\Meta\Subscription_List;
 use Stomp\Transport\Frame;
 use Stomp\Transport\Message;
-
 /**
  * Interface IStateful methods that must be treated in every stomp state.
  *
  * @package Stomp\States
  */
-interface IStateful
+interface I_Stateful
 {
     /**
      * Acknowledge consumption of a message from a subscription
@@ -27,7 +25,6 @@ interface IStateful
      * @return void
      */
     public function ack(Frame $frame);
-
     /**
      * Not acknowledge consumption of a message from a subscription
      *
@@ -35,7 +32,6 @@ interface IStateful
      * @return void
      */
     public function nack(Frame $frame, $requeue = null);
-
     /**
      * Send a message.
      *
@@ -43,28 +39,24 @@ interface IStateful
      * @return bool
      */
     public function send($destination, Message $message);
-
     /**
      * Begins an transaction.
      *
      * @return void
      */
     public function begin();
-
     /**
      * Commit current transaction.
      *
      * @return void
      */
     public function commit();
-
     /**
      * Abort current transaction.
      *
      * @return void
      */
     public function abort();
-
     /**
      * Subscribe to given destination.
      *
@@ -76,26 +68,23 @@ interface IStateful
      * @return int
      */
     public function subscribe($destination, $selector, $ack, array $header = []);
-
     /**
      * Unsubscribe from current or given destination.
      *
      * @param int $subscriptionId
      * @return void
      */
-    public function unsubscribe($subscriptionId = null);
-
+    public function unsubscribe($subscription_id = null);
     /**
      * Read a frame
      *
      * @return \Stomp\Transport\Frame|false
      */
     public function read();
-
     /**
      * Returns as list of all active subscriptions.
      *
      * @return SubscriptionList
      */
-    public function getSubscriptions();
+    public function get_subscriptions();
 }

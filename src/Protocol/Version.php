@@ -1,23 +1,21 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\Protocol;
 
-use Stomp\Broker\ActiveMq\ActiveMq;
+use Stomp\Broker\Active_Mq\Active_Mq;
 use Stomp\Broker\Apollo\Apollo;
-use Stomp\Broker\OpenMq\OpenMq;
-use Stomp\Broker\RabbitMq\RabbitMq;
-use Stomp\Exception\StompException;
-use Stomp\Exception\UnexpectedResponseException;
+use Stomp\Broker\Open_Mq\Open_Mq;
+use Stomp\Broker\Rabbit_Mq\Rabbit_Mq;
+use Stomp\Exception\Stomp_Exception;
+use Stomp\Exception\Unexpected_Response_Exception;
 use Stomp\Transport\Frame;
-
 /**
  * Version determine stomp version and server dialect.
  *
@@ -38,12 +36,10 @@ class Version
      * Stomp Version 1.2
      */
     public const VERSION_1_2 = '1.2';
-
     /**
      * @var Frame
      */
     private $frame;
-
     /**
      * Version constructor.
      *
@@ -51,15 +47,11 @@ class Version
      */
     public function __construct(Frame $frame)
     {
-        if ($frame->getCommand() != 'CONNECTED') {
-            throw new UnexpectedResponseException(
-                $frame,
-                sprintf('Expected a "CONNECTED" Frame to determine Version. Got a "%s" Frame!', $frame->getCommand())
-            );
+        if ($frame->get_command() != 'CONNECTED') {
+            throw new Unexpected_Response_Exception($frame, sprintf('Expected a "CONNECTED" Frame to determine Version. Got a "%s" Frame!', $frame->get_command()));
         }
         $this->frame = $frame;
     }
-
     /**
      * Returns the protocol to use.
      *
@@ -67,42 +59,40 @@ class Version
      * @param string $default server to use of no server detected
      * @return ActiveMq|Apollo|Protocol|RabbitMq
      */
-    public function getProtocol($clientId, $default = 'ActiveMQ/5.11.1')
+    public function get_protocol($client_id, $default = 'ActiveMQ/5.11.1')
     {
         $server = trim((string) $this->frame['server']) ?: $default;
-        $version = $this->getVersion();
+        $version = $this->get_version();
         if (stristr($server, 'rabbitmq') !== false) {
-            return new RabbitMq($clientId, $version, $server);
+            return new Rabbit_Mq($client_id, $version, $server);
         }
         if (stristr($server, 'apache-apollo') !== false) {
-            return new Apollo($clientId, $version, $server);
+            return new Apollo($client_id, $version, $server);
         }
         if (stristr($server, 'activemq') !== false) {
-            return new ActiveMq($clientId, $version, $server);
+            return new Active_Mq($client_id, $version, $server);
         }
         if (stristr($server, 'open message queue') !== false || stristr($server, 'openmq') !== false) {
-            return new OpenMq($clientId, $version, $server);
+            return new Open_Mq($client_id, $version, $server);
         }
-        return new Protocol($clientId, $version, $server);
+        return new Protocol($client_id, $version, $server);
     }
-
     /**
      * Detected version
      *
      * @return string
      */
-    public function getVersion()
+    public function get_version()
     {
         return $this->frame['version'] ?: self::VERSION_1_0;
     }
-
     /**
      * Check if version is same or newer than given one.
      *
      * @param string $version to check against
      */
-    public function hasVersion($version): bool
+    public function has_version($version): bool
     {
-        return version_compare($this->getVersion(), $version, '>=');
+        return version_compare($this->get_version(), $version, '>=');
     }
 }

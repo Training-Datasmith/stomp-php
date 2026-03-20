@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp\States;
 
 /**
@@ -16,12 +15,12 @@ namespace Stomp\States;
  * @package Stomp\States
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-abstract class StateSetter
+abstract class State_Setter
 {
     /**
      * Change current state to given one, might return creation data from state.
      *
      * @return mixed
      */
-    abstract protected function setState(IStateful $state);
+    abstract protected function set_state(I_Stateful $state);
 }

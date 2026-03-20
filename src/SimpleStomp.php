@@ -1,20 +1,18 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Stomp;
 
-use Stomp\Exception\StompException;
+use Stomp\Exception\Stomp_Exception;
 use Stomp\Protocol\Protocol;
 use Stomp\Transport\Frame;
 use Stomp\Transport\Message;
-
 /**
  * Simple Stomp Client
  *
@@ -24,13 +22,12 @@ use Stomp\Transport\Message;
  * @package Stomp
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class SimpleStomp
+class Simple_Stomp
 {
     /**
      * @var Client
      */
     protected $client;
-
     /**
      * LegacyStomp constructor.
      */
@@ -38,7 +35,6 @@ class SimpleStomp
     {
         $this->client = $client;
     }
-
     /**
      * Read response frame from server
      *
@@ -46,9 +42,8 @@ class SimpleStomp
      */
     public function read()
     {
-        return $this->client->readFrame();
+        return $this->client->read_frame();
     }
-
     /**
      * Register to listen to a given destination
      *
@@ -57,21 +52,17 @@ class SimpleStomp
      * @param string $selector
      * @return bool
      */
-    public function subscribe($destination, $subscriptionId = null, $ack = 'auto', $selector = null, array $header = [])
+    public function subscribe($destination, $subscription_id = null, $ack = 'auto', $selector = null, array $header = [])
     {
-        return $this->client->sendFrame(
-            $this->getProtocol()->getSubscribeFrame($destination, $subscriptionId, $ack, $selector)->addHeaders($header)
-        );
+        return $this->client->send_frame($this->get_protocol()->get_subscribe_frame($destination, $subscription_id, $ack, $selector)->add_headers($header));
     }
-
     /**
      * @return Protocol
      */
-    protected function getProtocol()
+    protected function get_protocol()
     {
-        return $this->client->getProtocol();
+        return $this->client->get_protocol();
     }
-
     /**
      * Send a message
      *
@@ -83,7 +74,6 @@ class SimpleStomp
     {
         return $this->client->send($destination, $message);
     }
-
     /**
      * Remove an existing subscription
      *
@@ -92,13 +82,10 @@ class SimpleStomp
      * @return boolean
      * @throws StompException
      */
-    public function unsubscribe($destination, $subscriptionId = null, array $header = [])
+    public function unsubscribe($destination, $subscription_id = null, array $header = [])
     {
-        return $this->client->sendFrame(
-            $this->getProtocol()->getUnsubscribeFrame($destination, $subscriptionId)->addHeaders($header)
-        );
+        return $this->client->send_frame($this->get_protocol()->get_unsubscribe_frame($destination, $subscription_id)->add_headers($header));
     }
-
     /**
      * Start a transaction
      *
@@ -106,11 +93,10 @@ class SimpleStomp
      * @return boolean
      * @throws StompException
      */
-    public function begin($transactionId = null)
+    public function begin($transaction_id = null)
     {
-        return $this->client->sendFrame($this->getProtocol()->getBeginFrame($transactionId));
+        return $this->client->send_frame($this->get_protocol()->get_begin_frame($transaction_id));
     }
-
     /**
      * Commit a transaction in progress
      *
@@ -118,35 +104,32 @@ class SimpleStomp
      * @return boolean
      * @throws StompException
      */
-    public function commit($transactionId = null)
+    public function commit($transaction_id = null)
     {
-        return $this->client->sendFrame($this->getProtocol()->getCommitFrame($transactionId));
+        return $this->client->send_frame($this->get_protocol()->get_commit_frame($transaction_id));
     }
-
     /**
      * Roll back a transaction in progress
      *
      * @param string $transactionId
      * @return bool
      */
-    public function abort($transactionId = null)
+    public function abort($transaction_id = null)
     {
-        return $this->client->sendFrame($this->getProtocol()->getAbortFrame($transactionId));
+        return $this->client->send_frame($this->get_protocol()->get_abort_frame($transaction_id));
     }
-
     /**
      * Acknowledge consumption of a message from a subscription
      */
     public function ack(Frame $frame): void
     {
-        $this->client->sendFrame($this->getProtocol()->getAckFrame($frame), false);
+        $this->client->send_frame($this->get_protocol()->get_ack_frame($frame), false);
     }
-
     /**
      * Not acknowledge consumption of a message from a subscription
      */
     public function nack(Frame $frame): void
     {
-        $this->client->sendFrame($this->getProtocol()->getNackFrame($frame), false);
+        $this->client->send_frame($this->get_protocol()->get_nack_frame($frame), false);
     }
 }

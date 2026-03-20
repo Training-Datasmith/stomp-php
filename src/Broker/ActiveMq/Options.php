@@ -1,17 +1,15 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-namespace Stomp\Broker\ActiveMq;
+namespace Stomp\Broker\Active_Mq;
 
 use ArrayAccess;
-
 /**
  * Options for ActiveMq Stomp
  *
@@ -22,18 +20,8 @@ use ArrayAccess;
  */
 class Options implements ArrayAccess
 {
-    private $extensions = [
-        'activemq.dispatchAsync',
-        'activemq.exclusive',
-        'activemq.maximumPendingMessageLimit',
-        'activemq.noLocal',
-        'activemq.prefetchSize',
-        'activemq.priority',
-        'activemq.retroactive',
-    ];
-
+    private $extensions = ['activemq.dispatchAsync', 'activemq.exclusive', 'activemq.maximumPendingMessageLimit', 'activemq.noLocal', 'activemq.prefetchSize', 'activemq.priority', 'activemq.retroactive'];
     private $options = [];
-
     /**
      * Options constructor.
      */
@@ -43,74 +31,63 @@ class Options implements ArrayAccess
             $this[$key] = $value;
         }
     }
-
-    #[\ReturnTypeWillChange]
+    #[\Return_Type_Will_Change]
     public function offsetExists($offset)
     {
         return isset($this->options[$offset]);
     }
-
-    #[\ReturnTypeWillChange]
+    #[\Return_Type_Will_Change]
     public function offsetGet($offset)
     {
         return $this->options[$offset];
     }
-
-    #[\ReturnTypeWillChange]
+    #[\Return_Type_Will_Change]
     public function offsetSet($offset, $value): void
     {
         if (in_array($offset, $this->extensions, true)) {
             $this->options[$offset] = $value;
         }
     }
-
-    #[\ReturnTypeWillChange]
+    #[\Return_Type_Will_Change]
     public function offsetUnset($offset): void
     {
         unset($this->options[$offset]);
     }
-
-    public function getOptions()
+    public function get_options()
     {
         return $this->options;
     }
-
-    public function activateRetroactive(): self
+    public function activate_retroactive(): self
     {
         $this['activemq.retroactive'] = 'true';
         return $this;
     }
-    public function activateExclusive(): self
+    public function activate_exclusive(): self
     {
         $this['activemq.exclusive'] = 'true';
         return $this;
     }
-
-    public function activateDispatchAsync(): self
+    public function activate_dispatch_async(): self
     {
         $this['activemq.dispatchAsync'] = 'true';
         return $this;
     }
-
-    public function setPriority($priority): self
+    public function set_priority($priority): self
     {
         $this['activemq.priority'] = $priority;
         return $this;
     }
-
-    public function setPrefetchSize($size): self
+    public function set_prefetch_size($size): self
     {
         $this['activemq.prefetchSize'] = max($size, 1);
         return $this;
     }
-
-    public function activateNoLocal(): self
+    public function activate_no_local(): self
     {
         $this['activemq.noLocal'] = 'true';
         return $this;
     }
-
-    public function setMaximumPendingLimit($limit): self
+    public function set_maximum_pending_limit($limit): self
     {
         $this['activemq.maximumPendingMessageLimit'] = $limit;
         return $this;

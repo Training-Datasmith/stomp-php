@@ -1,20 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of the Stomp package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-namespace Stomp\Broker\ActiveMq;
+namespace Stomp\Broker\Active_Mq;
 
 use Stomp\Protocol\Protocol;
 use Stomp\Protocol\Version;
 use Stomp\Transport\Frame;
-
 /**
  * ActiveMq Stomp dialect.
  *
@@ -25,15 +22,14 @@ use Stomp\Transport\Frame;
  * @author Michael Caplan <mcaplan@labnet.net>
  * @author Jens Radtke <swefl.oss@fin-sn.de>
  */
-class ActiveMq extends Protocol
+class Active_Mq extends Protocol
 {
     /**
      * Prefetch Size for subscriptions.
      *
      * @var int
      */
-    private $prefetchSize = 1;
-
+    private $prefetch_size = 1;
     /**
      * ActiveMq subscribe frame.
      *
@@ -44,22 +40,16 @@ class ActiveMq extends Protocol
      * @param boolean|false $durable durable subscription
      * @return Frame
      */
-    public function getSubscribeFrame(
-        $destination,
-        $subscriptionId = null,
-        $ack = 'auto',
-        $selector = null,
-        $durable = false
-    ) {
-        $frame = parent::getSubscribeFrame($destination, $subscriptionId, $ack, $selector);
-        $frame['activemq.prefetchSize'] = $this->prefetchSize;
+    public function get_subscribe_frame($destination, $subscription_id = null, $ack = 'auto', $selector = null, $durable = false)
+    {
+        $frame = parent::get_subscribe_frame($destination, $subscription_id, $ack, $selector);
+        $frame['activemq.prefetchSize'] = $this->prefetch_size;
         if ($durable) {
-            $frame['activemq.subscriptionName'] = $this->getClientId();
-            $frame['durable-subscriber-name'] = $subscriptionId;
+            $frame['activemq.subscriptionName'] = $this->get_client_id();
+            $frame['durable-subscriber-name'] = $subscription_id;
         }
         return $frame;
     }
-
     /**
      * ActiveMq unsubscribe frame.
      *
@@ -68,75 +58,69 @@ class ActiveMq extends Protocol
      * @param bool|false $durable
      * @return Frame
      */
-    public function getUnsubscribeFrame($destination, $subscriptionId = null, $durable = false)
+    public function get_unsubscribe_frame($destination, $subscription_id = null, $durable = false)
     {
-        $frame = parent::getUnsubscribeFrame($destination, $subscriptionId);
+        $frame = parent::get_unsubscribe_frame($destination, $subscription_id);
         if ($durable) {
-            $frame['activemq.subscriptionName'] = $this->getClientId();
-            $frame['durable-subscriber-name'] = $subscriptionId;
+            $frame['activemq.subscriptionName'] = $this->get_client_id();
+            $frame['durable-subscriber-name'] = $subscription_id;
         }
         return $frame;
     }
-
     /**
      * @inheritdoc
      */
-    public function getAckFrame(Frame $frame, $transactionId = null)
+    public function get_ack_frame(Frame $frame, $transaction_id = null)
     {
-        $ack = $this->createFrame('ACK');
-        $ack['transaction'] = $transactionId;
-        if ($this->hasVersion(Version::VERSION_1_2)) {
-            $ack['id'] = $frame['ack'] ?: $frame->getMessageId();
+        $ack = $this->create_frame('ACK');
+        $ack['transaction'] = $transaction_id;
+        if ($this->has_version(Version::VERSION_1_2)) {
+            $ack['id'] = $frame['ack'] ?: $frame->get_message_id();
         } else {
-            $ack['message-id'] = $frame['ack'] ?: $frame->getMessageId();
-            if ($this->hasVersion(Version::VERSION_1_1)) {
+            $ack['message-id'] = $frame['ack'] ?: $frame->get_message_id();
+            if ($this->has_version(Version::VERSION_1_1)) {
                 $ack['subscription'] = $frame['subscription'];
             }
         }
         return $ack;
     }
-
     /**
      * @inheritdoc
      */
-    public function getNackFrame(Frame $frame, $transactionId = null, $requeue = null)
+    public function get_nack_frame(Frame $frame, $transaction_id = null, $requeue = null)
     {
         if ($requeue !== null) {
-            throw new \LogicException(
-                'requeue header not supported by ActiveMQ. Please read ActiveMQ DLQ documentation.'
-            );
+            throw new \LogicException('requeue header not supported by ActiveMQ. Please read ActiveMQ DLQ documentation.');
         }
-        $nack = $this->createFrame('NACK');
-        $nack['transaction'] = $transactionId;
-        if ($this->hasVersion(Version::VERSION_1_2)) {
-            $nack['id'] = $frame['ack'] ?: $frame->getMessageId();
+        $nack = $this->create_frame('NACK');
+        $nack['transaction'] = $transaction_id;
+        if ($this->has_version(Version::VERSION_1_2)) {
+            $nack['id'] = $frame['ack'] ?: $frame->get_message_id();
         } else {
-            $nack['message-id'] = $frame['ack'] ?: $frame->getMessageId();
-            if ($this->hasVersion(Version::VERSION_1_1)) {
+            $nack['message-id'] = $frame['ack'] ?: $frame->get_message_id();
+            if ($this->has_version(Version::VERSION_1_1)) {
                 $nack['subscription'] = $frame['subscription'];
             }
         }
         return $nack;
     }
-
     /**
      * Prefetch Size for subscriptions
      *
      * @return int
      */
-    public function getPrefetchSize()
+    public function get_prefetch_size()
     {
-        return $this->prefetchSize;
+        return $this->prefetch_size;
     }
-
     /**
      * Prefetch Size for subscriptions
      *
      * @param int $prefetchSize
      */
-    public function setPrefetchSize($prefetchSize): self
+    public function set_prefetch_size($prefetch_size): self
     {
-        $this->prefetchSize = $prefetchSize;
+        $this->prefetch_size = $prefetch_size;
         return $this;
     }
 }
