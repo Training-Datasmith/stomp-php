@@ -163,9 +163,10 @@ class Frame implements ArrayAccess
     public function __toString(): string
     {
         $data = $this->command . "\n";
+        $body = (string) $this->body;
 
         if (!$this->legacyMode) {
-            if ($this->body && ($this->addLengthHeader || stripos($this->body, "\x00") !== false)) {
+            if ($body !== '' && ($this->addLengthHeader || stripos($body, "\x00") !== false)) {
                 $this['content-length'] = $this->getBodySize();
             }
         }
@@ -175,7 +176,7 @@ class Frame implements ArrayAccess
         }
 
         $data .= "\n";
-        $data .= $this->body;
+        $data .= $body;
         return $data . "\x00";
     }
 
@@ -184,7 +185,7 @@ class Frame implements ArrayAccess
      */
     protected function getBodySize(): int
     {
-        return strlen($this->body);
+        return strlen((string) $this->body);
     }
 
     /**

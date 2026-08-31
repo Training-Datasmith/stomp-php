@@ -60,7 +60,7 @@ class SequenceQueueBrowser extends QueueBrowser
     /**
      * @inheritdoc
      */
-    protected function getHeader()
+    protected function getHeader(): array
     {
         return parent::getHeader() + ['include-seq' => 'seq', 'from-seq' => $this->startAt];
     }
