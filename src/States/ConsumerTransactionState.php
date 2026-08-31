@@ -87,7 +87,7 @@ class ConsumerTransactionState extends ConsumerState
     /**
      * @inheritdoc
      */
-    public function begin()
+    public function begin(): void
     {
         throw new InvalidStateException($this, __FUNCTION__);
     }

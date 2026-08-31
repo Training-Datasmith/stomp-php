@@ -70,7 +70,7 @@ class ProducerTransactionState extends ProducerState
     /**
      * @inheritdoc
      */
-    public function begin()
+    public function begin(): void
     {
         throw new InvalidStateException($this, __FUNCTION__);
     }

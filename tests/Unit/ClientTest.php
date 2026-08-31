@@ -136,6 +136,8 @@ class ClientTest extends TestCase
             ->willReturnCallback(
                 function ($frame) use (&$sendFrame) {
                     $sendFrame = $frame;
+
+                    return true;
                 }
             );
         $connection
@@ -373,6 +375,8 @@ class ClientTest extends TestCase
                 $this->returnCallback(
                     function ($frame) use (&$lastWriteFrame) {
                         $lastWriteFrame = $frame;
+
+                        return true;
                     }
                 )
             );
